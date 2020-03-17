@@ -27,7 +27,7 @@ public class GalleryFragment extends Fragment {
 
     private static final String TAG = "GalleryFragment";
 
-    DatabaseHelper mDatabaseHelper;
+    DatabaseHelper mDatabaseHelper;//this is a test commit message
 
     private ListView mListView;
 
