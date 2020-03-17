@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/home_icon"
+            android:title="@string/menu_home" />
+        <item
+            android:id="@+id/nav_feedback"
+            android:icon="@drawable/feedback_icon"
+            android:title="@string/menu_feedback" />
+        <item
+            android:id="@+id/nav_dashboard"
+            android:icon="@drawable/dashboard_icon"
+            android:title="@string/menu_dashboard" />
+    </group>
+    <item android:title="Social">
+        <menu>
+            <item
+                android:id="@+id/id_facebook"
+                android:icon="@drawable/facebook_icon"
+                android:title="Facebook" />
+            <item
+                android:title="Telegram"
+                android:icon="@drawable/telegram_icon"
+                android:id="@+id/id_telegram"/>
+        </menu>
+    </item>
+</menu>

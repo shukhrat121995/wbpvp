@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".PostActivity">
+
+        <ImageButton
+            android:id="@+id/select_image"
+            android:layout_width="match_parent"
+            android:background="#00FFFFFF"
+            android:src="@mipmap/add_btn"
+            android:layout_margin="10dp"
+            android:scaleType="centerCrop"
+            android:layout_height="250dp"
+            android:contentDescription="Select Image" />
+
+        <EditText
+            android:id="@+id/feedback_title"
+            android:layout_below="@id/select_image"
+            android:layout_width="match_parent"
+            android:textSize="18sp"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:background="@drawable/input_outline"
+            android:layout_height="50dp"
+            android:hint="Feedback title..."
+            android:ems="10"
+            android:inputType="textPersonName"
+            />
+
+        <EditText
+            android:id="@+id/feedback_description"
+            android:layout_margin="10dp"
+            android:textSize="18sp"
+            android:padding="10dp"
+            android:background="@drawable/input_outline"
+            android:hint="Feedback description..."
+            android:layout_below="@+id/feedback_title"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:inputType="textMultiLine" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:id="@+id/layout_region"
+            android:background="@drawable/input_outline"
+            android:layout_below="@id/feedback_description"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:layout_height="50dp">
+            <Spinner
+                android:layout_width="match_parent"
+                android:id="@+id/spinner_region"
+                android:spinnerMode="dropdown"
+                android:layout_height="match_parent"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:id="@+id/layout_district"
+            android:background="@drawable/input_outline"
+            android:layout_below="@id/layout_region"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:layout_height="50dp">
+            <Spinner
+                android:layout_width="match_parent"
+                android:id="@+id/spinner_district"
+                android:spinnerMode="dropdown"
+                android:layout_height="match_parent"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:id="@+id/layout_village"
+            android:background="@drawable/input_outline"
+            android:layout_below="@id/layout_district"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:layout_height="50dp">
+            <Spinner
+                android:layout_width="match_parent"
+                android:id="@+id/spinner_village"
+                android:spinnerMode="dropdown"
+                android:layout_height="match_parent"/>
+        </RelativeLayout>
+
+        <Switch
+            android:id="@+id/switch_anonymous"
+            android:showText="true"
+            android:textSize="18sp"
+            android:padding="10dp"
+            android:textOff=""
+            android:textOn=""
+            android:layout_margin="10dp"
+            android:layout_below="@id/layout_village"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Anonymous feedback" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:text="Submit Feedback"
+            android:id="@+id/submit_feedback"
+            android:textColor="#FFF"
+            android:background="@color/colorPrimary"
+            android:layout_below="@id/switch_anonymous"
+            android:layout_height="wrap_content"/>
+
+
+
+
+    </RelativeLayout>
+</ScrollView>
