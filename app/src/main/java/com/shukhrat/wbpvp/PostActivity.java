@@ -3,16 +3,30 @@ package com.shukhrat.wbpvp;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.loader.content.CursorLoader;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.Image;
+import android.media.MediaScannerConnection;
+import android.net.ConnectivityManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -35,8 +49,13 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.shukhrat.wbpvp.database.DatabaseHelper;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.InetAddress;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -74,7 +93,11 @@ public class PostActivity extends AppCompatActivity {
 
     private String reg, dis, vil = null;
 
+    private String absolute_path = null;
+
     private Switch anonymous;
+
+    private OutputStream outputStream;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -225,7 +248,7 @@ public class PostActivity extends AppCompatActivity {
        sumit_feedback.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               if(isInternetAvailable())
+               if(isNetworkConnected())
                    startPosting();
                else{
 
@@ -238,9 +261,8 @@ public class PostActivity extends AppCompatActivity {
                    //store inside local database SQLite
                    final String title_val = feedback_title.getText().toString().trim();
                    final String description_val = feedback_description.getText().toString().trim();
-                   if (!TextUtils.isEmpty(title_val)&& !TextUtils.isEmpty(description_val)&&imageUri != null){
-
-                       PostOfflineData(title_val, description_val, imageUri.getLastPathSegment(), String.valueOf(new Date().getTime()), reg+"/"+dis+"/"+vil, day+"/"+monthString+"/"+year, false, anonymous.isChecked(), false+"_"+anonymous.isChecked());
+                   if (!TextUtils.isEmpty(title_val)&& !TextUtils.isEmpty(description_val)&&imageUri != null && absolute_path != null){
+                       PostOfflineData(title_val, description_val, absolute_path, String.valueOf(new Date().getTime()), reg+"/"+dis+"/"+vil, day+"/"+monthString+"/"+year, false, anonymous.isChecked(), false+"_"+anonymous.isChecked());
                        startActivity(new Intent(PostActivity.this, MainActivity.class));
                    }
                    else{
@@ -250,6 +272,38 @@ public class PostActivity extends AppCompatActivity {
            }
        });
 
+    }
+
+    private String save(Bitmap bitmap)
+    {
+        File save_path = null;
+        if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
+        {
+            try
+            {
+                File sdCard = Environment.getExternalStorageDirectory();
+                File dir = new File(sdCard.getAbsolutePath() + "/wbpvp");
+                dir.mkdirs();
+                File file = new File(dir, "wbpvp_"+new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+ ".JPEG");
+                save_path =   file;
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 50,baos);
+                FileOutputStream f = null;
+                f = new FileOutputStream(file);
+                MediaScannerConnection.scanFile(this, new String[]{file.getAbsolutePath()}, null, null);
+                if (f != null)
+                {
+                    f.write(baos.toByteArray());
+                    f.flush();
+                    f.close();
+                }
+            }
+            catch (Exception e)
+            {
+                // TODO: handle exception
+            }
+        }
+        return String.valueOf(save_path);
     }
 
     public void PostOfflineData(String title, String description, String image, String timeStamp, String location, String date, Boolean status, Boolean anonymous, String status_anonymous){
@@ -263,19 +317,15 @@ public class PostActivity extends AppCompatActivity {
 
     }
 
+
     public void toastMessage(String message){
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
-    public boolean isInternetAvailable() {
-        try {
-            InetAddress ipAddr = InetAddress.getByName("google.com");
-            //You can replace it with your name
-            return !ipAddr.equals("");
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        } catch (Exception e) {
-            return false;
-        }
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 
     private void startPosting(){
@@ -341,7 +391,54 @@ public class PostActivity extends AppCompatActivity {
 
         if(requestCode == GALLERY_REQUEST && resultCode == RESULT_OK){
             imageUri = data.getData();
+
+            //Toast.makeText(this, String.valueOf(imageUri), Toast.LENGTH_LONG).show();
             imageButton.setImageURI(imageUri);
+
+            try{
+                if(isStoragePermissionGranted())
+                {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                    absolute_path = save(bitmap);
+
+                }
+            }catch (Exception ex){
+                //Log.d(TAG, "onActivityResult: "+ex);
+
+            }
+
+
+
+
+
+        }
+    }
+
+    public  boolean isStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v(TAG,"Permission is granted");
+                return true;
+            } else {
+
+                Log.v(TAG,"Permission is revoked");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                return false;
+            }
+        }
+        else { //permission is automatically granted on sdk<23 upon installation
+            Log.v(TAG,"Permission is granted");
+            return true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            Log.v(TAG,"Permission: "+permissions[0]+ "was "+grantResults[0]);
+            //resume tasks needing this permission
         }
     }
 }

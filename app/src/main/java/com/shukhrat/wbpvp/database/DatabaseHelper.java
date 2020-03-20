@@ -80,4 +80,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return data;
     }
 
+    public Cursor getItemID(String image_url){
+        SQLiteDatabase database = this.getWritableDatabase();
+        String query = "SELECT " + COL0 + " FROM " + TABLE_NAME + " WHERE " + COL3 + " = '" + image_url + "'";
+        Cursor data = database.rawQuery(query,null);
+        return data;
+    }
+
+    public void DeleteRow(int primary_id){
+        SQLiteDatabase database = this.getWritableDatabase();
+        String query = "DELETE FROM " + TABLE_NAME + " WHERE " + COL0 + " = '" + primary_id+"'";
+        database.execSQL(query);
+    }
+
+
+
 }

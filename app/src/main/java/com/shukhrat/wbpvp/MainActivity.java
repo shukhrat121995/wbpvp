@@ -1,30 +1,27 @@
 package com.shukhrat.wbpvp;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.shukhrat.wbpvp.authentification.EnterPhoneNumber;
-import com.shukhrat.wbpvp.ui.gallery.GalleryFragment;
-import com.shukhrat.wbpvp.ui.home.HomeFragment;
-import com.shukhrat.wbpvp.ui.slideshow.SlideshowFragment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.view.GravityCompat;
-import androidx.fragment.app.FragmentManager;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
@@ -34,13 +31,17 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import java.util.function.ToLongBiFunction;
 
 public class MainActivity extends AppCompatActivity{
 
     private AppBarConfiguration mAppBarConfiguration;
     private FirebaseAuth mAuth;
     private TextView mUID;
+
+
+    /* * * Permission Read External Storage*/
+    static final Integer READ_STORAGE_PERMISSION_REQUEST_CODE=0x3;
+    /* * * Permission Read External Storage*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +84,31 @@ public class MainActivity extends AppCompatActivity{
                 }
             }
         });
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    READ_STORAGE_PERMISSION_REQUEST_CODE);
+            return;
+        }
+
+
+
     }
+
+    @Override
+    public void onRequestPermissionsResult(final int requestCode, @NonNull final String[] permissions, @NonNull final int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == READ_STORAGE_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "permission granted", Toast.LENGTH_LONG).show();
+            } else {
+                // User refused to grant permission.
+            }
+        }
+    }
+
+
 
     @Override
     protected void onStart() {
@@ -149,8 +174,4 @@ public class MainActivity extends AppCompatActivity{
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/obodqishloqchannel"));
         startActivity(browserIntent);
     }
-
-
-
-
 }
