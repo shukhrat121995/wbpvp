@@ -48,6 +48,8 @@ import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Date;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class GalleryFragment extends Fragment implements RecyclerViewAdapter.OnNoteListener {
 
     private GalleryViewModel galleryViewModel;
@@ -131,8 +133,10 @@ public class GalleryFragment extends Fragment implements RecyclerViewAdapter.OnN
                 .setPositiveButton("Upload", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         //finish();
-                        if(isNetworkConnected())
+                        if(isNetworkConnected()) {
                             StartPosting(position);
+
+                        }
 
                     }
                 })
@@ -228,9 +232,16 @@ public class GalleryFragment extends Fragment implements RecyclerViewAdapter.OnN
                                         RemoveFromArrayLists();
                                         InitializeArrayLists();
                                         adapter.notifyItemRemoved(position);
+                                        new SweetAlertDialog(getContext())
+                                                .setTitleText("Success!")
+                                                .show();
                                     }
                                     else{
-                                        Toast.makeText(getContext(), "No id associated with that feedback", Toast.LENGTH_LONG).show();
+                                        //Toast.makeText(getContext(), "No id associated with that feedback", Toast.LENGTH_LONG).show();
+                                        new SweetAlertDialog(getContext(), SweetAlertDialog.ERROR_TYPE)
+                                                .setTitleText("Oops...")
+                                                .setContentText("Something went wrong!")
+                                                .show();
                                     }
                                 }
                             });
@@ -240,7 +251,11 @@ public class GalleryFragment extends Fragment implements RecyclerViewAdapter.OnN
                         @Override
                         public void onFailure(@NonNull Exception exception) {
                             progressDialog.dismiss();
-                            Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_LONG).show();
+                            new SweetAlertDialog(getContext(), SweetAlertDialog.ERROR_TYPE)
+                                    .setTitleText("Oops...")
+                                    .setContentText("Something went wrong!")
+                                    .show();
                         }
                     });
         }

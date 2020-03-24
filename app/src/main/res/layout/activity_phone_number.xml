@@ -58,7 +58,7 @@
             android:textColor="@color/colorPrimaryDark"
             android:drawableLeft="@drawable/ic_phone"
             android:drawablePadding="10dp"
-            android:hint="(+998)933767895"
+            android:hint="ex. 907777777"
             android:inputType="phone"
             android:maxLength="9" />
 

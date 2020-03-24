@@ -15,6 +15,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.ImageDecoder;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.Image;
 import android.media.MediaScannerConnection;
@@ -85,6 +86,7 @@ public class PostActivity extends AppCompatActivity {
     ArrayList<String> arrayList_Villages;
 
     private Uri imageUri = null;
+    Bitmap bitmap = null;
 
     private StorageReference mStorage;
     private DatabaseReference mDatabase;
@@ -141,15 +143,54 @@ public class PostActivity extends AppCompatActivity {
         arrayAdapter_Regions = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item,arrayList_Regions);
         spinner_region.setAdapter(arrayAdapter_Regions);
 
+        arrayList_Districts = new ArrayList<>();
+        arrayList_Districts.add(0, "Select District...");
+
         spinner_region.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position == 0){
+                    arrayList_Districts.clear();
                 }
                 else {
                     Toast.makeText(PostActivity.this, arrayList_Regions.get(position), Toast.LENGTH_SHORT).show();
                     reg = arrayList_Regions.get(position);
+
+                    if(reg.equals("Andijan")){
+                        arrayList_Districts.clear();
+                        arrayList_Districts.add("Bulakbashi");
+                        arrayList_Districts.add("Paxtaobod");
+                        arrayList_Districts.add("Markhamat");
+                        arrayList_Districts.add("Ulugnar");
+                        arrayList_Districts.add("Boz");
+                    }else if(reg.equals("Jizzakh")){
+                        arrayList_Districts.clear();
+                        arrayList_Districts.add("Bakhmal");
+                        arrayList_Districts.add("Zomin");
+                        arrayList_Districts.add("Forish");
+                        arrayList_Districts.add("Yangiobod");
+                    }else if(reg.equals("Namangan")){
+                        arrayList_Districts.clear();
+                        arrayList_Districts.add("Minbulak");
+                        arrayList_Districts.add("Pop");
+                        arrayList_Districts.add("Chartak");
+                        arrayList_Districts.add("Chust");
+                        arrayList_Districts.add("Yangikurgan");
+                    }else if(reg.equals("Syrdarya")){
+                        arrayList_Districts.clear();
+                        arrayList_Districts.add("Boevut");
+                        arrayList_Districts.add("Sardoba");
+                        arrayList_Districts.add("Hovos");
+                    }else if(reg.equals("Fergana")){
+                        arrayList_Districts.clear();
+                        arrayList_Districts.add("Sokh");
+                        arrayList_Districts.add("Furqat");
+                        arrayList_Districts.add("Yazyavan");
+                        arrayList_Districts.add("Kushtepa");
+                    }
                 }
+                arrayAdapter_Districts = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item,arrayList_Districts);
+                spinner_district.setAdapter(arrayAdapter_Districts);
             }
 
             @Override
@@ -160,32 +201,13 @@ public class PostActivity extends AppCompatActivity {
         //* * * Spinner Regions end * * *
 
         //* * * Spinner Districts start * * *
-        arrayList_Districts = new ArrayList<>();
-        arrayList_Districts.add(0, "Select District...");
-        arrayList_Districts.add("Bulakbashi");
-        arrayList_Districts.add("Paxtaobod");
-        arrayList_Districts.add("Markhamat");
-        arrayList_Districts.add("Ulugnar");
-        arrayList_Districts.add("Boz");
-        arrayList_Districts.add("Bakhmal");
-        arrayList_Districts.add("Zomin");
-        arrayList_Districts.add("Forish");
-        arrayList_Districts.add("Yangiobod");
-        arrayList_Districts.add("Minbulak");
-        arrayList_Districts.add("Pop");
-        arrayList_Districts.add("Chartak");
-        arrayList_Districts.add("Chust");
-        arrayList_Districts.add("Yangikurgan");
-        arrayList_Districts.add("Boevut");
-        arrayList_Districts.add("Sardoba");
-        arrayList_Districts.add("Hovos");
-        arrayList_Districts.add("Sokh");
-        arrayList_Districts.add("Furqat");
-        arrayList_Districts.add("Yazyavan");
-        arrayList_Districts.add("Kushtepa");
 
-        arrayAdapter_Districts = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item,arrayList_Districts);
-        spinner_district.setAdapter(arrayAdapter_Districts);
+
+
+
+
+
+
 
         spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -398,6 +420,9 @@ public class PostActivity extends AppCompatActivity {
             try{
                 if(isStoragePermissionGranted())
                 {
+
+                    //ImageDecoder.Source source = ImageDecoder.createSource(this.getContentResolver(), imageUri);
+                    //bitmap = ImageDecoder.decodeBitmap(source);
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
                     absolute_path = save(bitmap);
 
