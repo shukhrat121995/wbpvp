@@ -99,16 +99,11 @@ public class HomeFragment extends Fragment {
                             Toast.makeText(getContext(), "test", Toast.LENGTH_LONG).show();
                         }
                     });
-
-
-
                 }
             };
 
         adapter.startListening();
         mBlogList.setAdapter(adapter);
-
-
     }
 
     public static class BlogViewHolder extends RecyclerView.ViewHolder{

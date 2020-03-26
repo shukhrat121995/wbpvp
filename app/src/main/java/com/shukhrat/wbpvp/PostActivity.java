@@ -105,6 +105,7 @@ public class PostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+        setTitle("Post Feedback");
 
         mStorage = FirebaseStorage.getInstance().getReference("Feedback_images");
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Feedback");
@@ -151,6 +152,7 @@ public class PostActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position == 0){
                     arrayList_Districts.clear();
+                    arrayList_Districts.add(0, "Select District...");
                 }
                 else {
                     Toast.makeText(PostActivity.this, arrayList_Regions.get(position), Toast.LENGTH_SHORT).show();
@@ -158,6 +160,7 @@ public class PostActivity extends AppCompatActivity {
 
                     if(reg.equals("Andijan")){
                         arrayList_Districts.clear();
+                        arrayList_Districts.add(0, "Select District...");
                         arrayList_Districts.add("Bulakbashi");
                         arrayList_Districts.add("Paxtaobod");
                         arrayList_Districts.add("Markhamat");
@@ -165,12 +168,14 @@ public class PostActivity extends AppCompatActivity {
                         arrayList_Districts.add("Boz");
                     }else if(reg.equals("Jizzakh")){
                         arrayList_Districts.clear();
+                        arrayList_Districts.add(0, "Select District...");
                         arrayList_Districts.add("Bakhmal");
                         arrayList_Districts.add("Zomin");
                         arrayList_Districts.add("Forish");
                         arrayList_Districts.add("Yangiobod");
                     }else if(reg.equals("Namangan")){
                         arrayList_Districts.clear();
+                        arrayList_Districts.add(0, "Select District...");
                         arrayList_Districts.add("Minbulak");
                         arrayList_Districts.add("Pop");
                         arrayList_Districts.add("Chartak");
@@ -178,11 +183,13 @@ public class PostActivity extends AppCompatActivity {
                         arrayList_Districts.add("Yangikurgan");
                     }else if(reg.equals("Syrdarya")){
                         arrayList_Districts.clear();
+                        arrayList_Districts.add(0, "Select District...");
                         arrayList_Districts.add("Boevut");
                         arrayList_Districts.add("Sardoba");
                         arrayList_Districts.add("Hovos");
                     }else if(reg.equals("Fergana")){
                         arrayList_Districts.clear();
+                        arrayList_Districts.add(0, "Select District...");
                         arrayList_Districts.add("Sokh");
                         arrayList_Districts.add("Furqat");
                         arrayList_Districts.add("Yazyavan");
@@ -356,16 +363,24 @@ public class PostActivity extends AppCompatActivity {
         final String title_val = feedback_title.getText().toString().trim();
         final String description_val = feedback_description.getText().toString().trim();
 
-        if (!TextUtils.isEmpty(title_val)&& !TextUtils.isEmpty(description_val)&&imageUri != null){
-            Uri file = imageUri;
+        if (!TextUtils.isEmpty(title_val)&& !TextUtils.isEmpty(description_val) && imageUri != null && bitmap != null){
+            //Uri file = imageUri;
             StorageReference riversRef = mStorage.child(imageUri.getLastPathSegment());
 
-            riversRef.putFile(file)
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 25, baos);
+            byte[] data = baos.toByteArray();
+
+            riversRef.putBytes(data)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
                             Task<Uri> firebaseUri = taskSnapshot.getStorage().getDownloadUrl();
+
+
+
+
                             firebaseUri.addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
@@ -392,6 +407,12 @@ public class PostActivity extends AppCompatActivity {
                                     progressDialog.dismiss();
 
                                     startActivity(new Intent(PostActivity.this, MainActivity.class));
+                                }
+                            });
+                            firebaseUri.addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(getApplicationContext(), "CHECK", Toast.LENGTH_LONG).show();
                                 }
                             });
                         }
@@ -423,7 +444,7 @@ public class PostActivity extends AppCompatActivity {
 
                     //ImageDecoder.Source source = ImageDecoder.createSource(this.getContentResolver(), imageUri);
                     //bitmap = ImageDecoder.decodeBitmap(source);
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                    bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
                     absolute_path = save(bitmap);
 
                 }
