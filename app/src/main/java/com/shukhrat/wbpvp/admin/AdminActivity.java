@@ -2,6 +2,7 @@ package com.shukhrat.wbpvp.admin;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.os.PersistableBundle;
@@ -68,7 +69,7 @@ public class AdminActivity extends AppCompatActivity {
 
 
     public void LoadData(){
-        Query db = mDatabase.orderByChild("status").equalTo(false);
+        Query db = mDatabase;
 
         FirebaseRecyclerOptions<Blog> options =
                 new FirebaseRecyclerOptions.Builder<Blog>()
@@ -95,6 +96,7 @@ public class AdminActivity extends AppCompatActivity {
                 holder.setImage(model.getImage());
                 holder.setLocation(model.getLocation());
                 holder.setDate(model.getDate());
+                holder.setImageStatus(model.getAdmin());
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -109,6 +111,9 @@ public class AdminActivity extends AppCompatActivity {
                         b.putString("image", model.getImage());
                         b.putString("location", model.getLocation());
                         b.putString("date", model.getDate());
+                        b.putString("admin_reply", model.getAdmin_reply());
+                        b.putBoolean("anonymous", model.getAnonymous());
+                        b.putString("feedback_id", String.valueOf(getRef(position).getKey()));
                         intent.putExtras(b);
                         startActivity(intent);
 
@@ -175,6 +180,17 @@ public class AdminActivity extends AppCompatActivity {
         public void setDate(String date){
             TextView post_date =  (TextView) mView.findViewById(R.id.post_date);
             post_date.setText(date);
+        }
+
+        public void setImageStatus(String status){
+            ImageView status_image = (ImageView)mView.findViewById(R.id.image_status);
+            if(status.equals("new")){
+                status_image.setImageDrawable(mView.getResources().getDrawable(R.drawable.new_icon));
+            } else if (status.equals("rejected")){
+                status_image.setImageDrawable(mView.getResources().getDrawable(R.drawable.rejected_icon));
+            } else if (status.equals("approved")){
+                status_image.setImageDrawable(mView.getResources().getDrawable(R.drawable.approved_icon));
+            }
         }
     }
 }

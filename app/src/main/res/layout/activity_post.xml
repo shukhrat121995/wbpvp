@@ -113,12 +113,9 @@
             android:text="Submit Feedback"
             android:id="@+id/submit_feedback"
             android:textColor="#FFF"
+            android:layout_margin="10dp"
             android:background="@color/colorPrimary"
             android:layout_below="@id/switch_anonymous"
-            android:layout_height="wrap_content"/>
-
-
-
-
+            android:layout_height="70dp"/>
     </RelativeLayout>
 </ScrollView>

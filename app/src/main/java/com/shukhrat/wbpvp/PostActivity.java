@@ -99,8 +99,6 @@ public class PostActivity extends AppCompatActivity {
 
     private Switch anonymous;
 
-    private OutputStream outputStream;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -378,9 +376,6 @@ public class PostActivity extends AppCompatActivity {
 
                             Task<Uri> firebaseUri = taskSnapshot.getStorage().getDownloadUrl();
 
-
-
-
                             firebaseUri.addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
@@ -402,8 +397,9 @@ public class PostActivity extends AppCompatActivity {
                                     newPost.child("date").setValue(day+"/"+monthString+"/"+year);
                                     newPost.child("status").setValue(false);
                                     newPost.child("anonymous").setValue(anonymous.isChecked());
-
                                     newPost.child("status_anonymous").setValue(false+"_"+anonymous.isChecked());
+                                    newPost.child("admin").setValue("new");
+                                    newPost.child("admin_reply").setValue("Empty");
                                     progressDialog.dismiss();
 
                                     startActivity(new Intent(PostActivity.this, MainActivity.class));

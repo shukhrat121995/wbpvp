@@ -7,11 +7,14 @@ public class Blog {
     private String location;
     private Boolean status;
 
+    private String admin;
+    private String admin_reply;
+
     public Blog(){
 
     }
 
-    public Blog(String feedback_title, String feedback_description, String image, Boolean anonymous, String date, String location, Boolean status) {
+    public Blog(String feedback_title, String feedback_description, String image, Boolean anonymous, String date, String location, Boolean status, String admin, String admin_reply) {
         this.feedback_title = feedback_title;
         this.feedback_description = feedback_description;
         this.image = image;
@@ -19,6 +22,8 @@ public class Blog {
         this.date = date;
         this.location = location;
         this.status = status;
+        this.admin = admin;
+        this.admin_reply = admin_reply;
     }
 
     public String getFeedback_title() {
@@ -75,5 +80,21 @@ public class Blog {
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public String getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(String admin) {
+        this.admin = admin;
+    }
+
+    public String getAdmin_reply() {
+        return admin_reply;
+    }
+
+    public void setAdmin_reply(String admin_reply) {
+        this.admin_reply = admin_reply;
     }
 }
