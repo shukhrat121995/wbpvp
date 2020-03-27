@@ -1,11 +1,16 @@
 package com.shukhrat.wbpvp.admin;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.os.PersistableBundle;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -26,10 +32,17 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
+import org.jetbrains.annotations.NotNull;
+
 public class AdminActivity extends AppCompatActivity {
 
     private RecyclerView mFeedbackList;
     private DatabaseReference mDatabase;
+    private FirebaseRecyclerAdapter adapter;
+
+    private LinearLayoutManager mLayoutManager;
+
+    private static int scrollY = -1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,23 +54,31 @@ public class AdminActivity extends AppCompatActivity {
         mDatabase.keepSynced(true);
 
         mFeedbackList = (RecyclerView)findViewById(R.id.blog_list_admin);
+
+        mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager.setReverseLayout(true);
+        mLayoutManager.setStackFromEnd(true);
+
         mFeedbackList.setHasFixedSize(true);
-        mFeedbackList.setLayoutManager(new LinearLayoutManager(this));
+        mFeedbackList.setItemViewCacheSize(20);
+        mFeedbackList.setLayoutManager(mLayoutManager);
+
+        LoadData();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Query db = mDatabase.orderByChild("status_anonymous").equalTo("true_false");
+
+    public void LoadData(){
+        Query db = mDatabase.orderByChild("status").equalTo(false);
 
         FirebaseRecyclerOptions<Blog> options =
                 new FirebaseRecyclerOptions.Builder<Blog>()
                         .setQuery(db, Blog.class)
                         .build();
 
-        FirebaseRecyclerAdapter adapter = new FirebaseRecyclerAdapter<Blog, BlogViewHolderAdmin>(options) {
+        adapter = new FirebaseRecyclerAdapter<Blog, BlogViewHolderAdmin>(options) {
+            @NotNull
             @Override
-            public BlogViewHolderAdmin onCreateViewHolder(ViewGroup parent, int viewType) {
+            public BlogViewHolderAdmin onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.blog_admin, parent, false);
 
@@ -65,7 +86,7 @@ public class AdminActivity extends AppCompatActivity {
             }
 
             @Override
-            protected void onBindViewHolder(BlogViewHolderAdmin holder, final int position, final Blog model) {
+            protected void onBindViewHolder(@NotNull BlogViewHolderAdmin holder, final int position, @NotNull final Blog model) {
                 // Bind the image_details object to the BlogViewHolderAdmin
                 // ...
 
@@ -78,16 +99,28 @@ public class AdminActivity extends AppCompatActivity {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        //Save Scroll Position
+                        scrollY = position;
                         //StartNewActivity for admin
                         Intent intent = new Intent(getApplicationContext(), AdminEdit.class);
+                        Bundle b = new Bundle();
+                        b.putString("title", model.getFeedback_title());
+                        b.putString("description", model.getFeedback_description());
+                        b.putString("image", model.getImage());
+                        b.putString("location", model.getLocation());
+                        b.putString("date", model.getDate());
+                        intent.putExtras(b);
                         startActivity(intent);
+
                     }
                 });
             }
         };
-
+        if(scrollY != -1)
+            mFeedbackList.smoothScrollToPosition(scrollY);
         adapter.startListening();
         mFeedbackList.setAdapter(adapter);
+
     }
 
     public static class BlogViewHolderAdmin extends RecyclerView.ViewHolder{

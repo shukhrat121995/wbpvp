@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <ScrollView
@@ -22,16 +22,16 @@
                 android:layout_height="250dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:weightSum="2"
+                android:weightSum="3"
                 android:orientation="horizontal"
                 android:layout_margin="5dp"
                 android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="0dp"
                     android:textStyle="bold"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:id="@+id/admin_feedbackLocation"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:text="Feedback Location"
                     android:textColor="@color/colorPrimary"
                     android:gravity="center|start"
@@ -42,7 +42,7 @@
                     android:layout_weight="1"
                     android:textColor="@color/colorPrimary"
                     android:id="@+id/admin_feedbackDate"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:text="Feedback Date"
                     android:gravity="center|end"
                     android:layout_height="wrap_content"/>
@@ -63,12 +63,13 @@
                 android:textColor="#232323"
                 android:id="@+id/admin_feedbackDescription"
                 android:textSize="16sp"
-                android:text="Feedback Description aj;lsdkjf;alskdjf;aklsjdf;lkasjdf;lkajsd;flkja;slkdfj;alksdjf;laksjdf;lkajsdf;kljasd;flkja;slkdjf;alksjdf;;alskdfj;alksdjf;alksjdf;klajsdf;lkjasd;flkja;sdlkfj;alksdjf;laksjdf;lkjasd;flkja;slkdfj;aslkdjf;alskdjf;alksjdf;laksjdf;lkajsdf;lkjasd;flkja;sdlkjf;alksdjf;lkajsdf;lkjas;dlfkj;asldfj;aslkdjf;alksdjf;alksjdf;lkajsdf;lkjas;dlfkja;slkdfja;lskdjf;;alskjdf;alksjdf;lkajsdf;lkjas;dlkfja;sldkjf"
+                android:text="ksjdf;lkajsdf;lkjas;dlkfja;sldkjf"
                 android:gravity="center|start"
                 android:layout_height="wrap_content"/>
             <EditText
                 android:layout_width="match_parent"
                 android:layout_margin="5dp"
+                android:id="@+id/admin_reply"
                 android:gravity="start"
                 android:padding="5dp"
                 android:hint="Reply"
@@ -90,6 +91,7 @@
             android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:insetTop="0dp"
+            android:id="@+id/admin_reject"
             android:insetBottom="0dp"
             android:text="Reject"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
@@ -101,6 +103,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="0dp"
+            android:id="@+id/admin_verify"
             android:layout_height="match_parent"
             android:layout_gravity="bottom"
             android:layout_marginLeft="2.5dp"

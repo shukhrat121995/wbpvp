@@ -22,17 +22,21 @@
             android:paddingRight="10dp"
             android:textSize="18sp"
             android:id="@+id/post_title"
-            android:text="This is a title"
+            android:text="This is a title lasdjf;l;asldkfj;alksfdj;laksfdj"
             android:textStyle="bold"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"/>
         <TextView
             android:id="@+id/post_description"
             android:textSize="14sp"
             android:paddingTop="5dp"
             android:paddingLeft="10dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:paddingRight="10dp"
-            android:text="This is a description"
-            android:layout_width="match_parent"
+            android:text="This is a description ;laskdjf;asldkfj;alskdfjasdfalsasdfasdfasdfasdfasdf"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <LinearLayout
             android:layout_width="match_parent"
