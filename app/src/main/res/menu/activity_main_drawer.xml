@@ -28,10 +28,22 @@
                 android:id="@+id/id_facebook"
                 android:icon="@drawable/facebook_icon"
                 android:title="Facebook" />
+            <item android:id="@+id/id_twitter"
+                android:icon="@drawable/baseline_twitter_24"
+                android:title="Twitter"/>
             <item
                 android:title="Telegram"
                 android:icon="@drawable/telegram_icon"
                 android:id="@+id/id_telegram"/>
+        </menu>
+    </item>
+    <item android:title="Additions">
+        <menu>
+            <item
+                android:id="@+id/id_share"
+                android:icon="@drawable/baseline_share_24"
+                android:title="Share"
+                />
         </menu>
     </item>
 </menu>

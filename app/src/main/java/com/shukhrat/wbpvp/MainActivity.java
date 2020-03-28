@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.ShareCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -37,7 +39,9 @@ import androidx.navigation.ui.NavigationUI;
 import com.appus.splash.Splash;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -45,6 +49,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.shukhrat.wbpvp.admin.AdminActivity;
 import com.shukhrat.wbpvp.authentification.EnterPhoneNumber;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 
 public class MainActivity extends AppCompatActivity{
@@ -75,7 +81,7 @@ public class MainActivity extends AppCompatActivity{
 
         /*Splash.Builder splash = new Splash.Builder(this, getSupportActionBar());
         splash.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-        splash.setSplashImage(getResources().getDrawable(R.drawable.title_logo));
+        splash.setSplashImage(getResources().getDrawable(R.drawable.logo)).
         splash.perform();*/
 
         mAuth = FirebaseAuth.getInstance();
@@ -85,20 +91,27 @@ public class MainActivity extends AppCompatActivity{
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
 
-        /*FloatingActionButton fab = findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
+                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                    Intent intent = new Intent(MainActivity.this, PostActivity.class);
+                    startActivity(intent);
+                } else{
+                    Intent intent = new Intent(MainActivity.this, EnterPhoneNumber.class);
+                    startActivity(intent);
+                }
             }
-        });*/
+        });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         final NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_feedback, R.id.nav_admin,R.id.nav_dashboard, R.id.id_facebook, R.id.id_telegram)
+                R.id.nav_home, R.id.nav_feedback, R.id.nav_admin,R.id.nav_dashboard, R.id.id_facebook, R.id.id_telegram, R.id.id_twitter, R.id.id_share)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -111,11 +124,15 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
                 if(destination.getId() == R.id.id_facebook){
-                    facebook_open();
-                }else if (destination.getId() == R.id.id_telegram){
-                    telegram_open();
-                }else if (destination.getId() == R.id.nav_admin){
+                    web_open("https://www.facebook.com/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82-%D0%91%D0%BB%D0%B0%D0%B3%D0%BE%D1%83%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BD%D0%BD%D1%8B%D0%B5-%D1%81%D0%B5%D0%BB%D0%B0-%D0%A3%D0%B7%D0%B1%D0%B5%D0%BA%D0%B8%D1%81%D1%82%D0%B0%D0%BD%D0%B0-%D0%BF%D1%80%D0%B8-%D0%9C%D0%AD%D0%9F-%D0%A0%D0%A3%D0%B7-727457484339084/");
+                }if (destination.getId() == R.id.id_telegram){
+                    web_open("https://t.me/obodqishloqchannel");
+                }if (destination.getId() == R.id.nav_admin){
                     onCreateDialog();
+                }if(destination.getId()==R.id.id_twitter){
+                    web_open("https://twitter.com/pvp24032020");
+                }if(destination.getId()==R.id.id_share){
+                    ShareAppUrl();
                 }
             }
         });
@@ -169,16 +186,6 @@ public class MainActivity extends AppCompatActivity{
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.action_add){
-            if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-                Intent intent = new Intent(this, PostActivity.class);
-                startActivity(intent);
-            } else{
-                Intent intent = new Intent(this, EnterPhoneNumber.class);
-                startActivity(intent);
-            }
-
-        }
         if(item.getItemId() == R.id.action_sign_out){
             FirebaseAuth.getInstance().signOut();
             Intent homeIntent = new Intent(Intent.ACTION_MAIN);
@@ -196,15 +203,20 @@ public class MainActivity extends AppCompatActivity{
                 || super.onSupportNavigateUp();
     }
 
-    public void facebook_open()
-    {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82-%D0%91%D0%BB%D0%B0%D0%B3%D0%BE%D1%83%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BD%D0%BD%D1%8B%D0%B5-%D1%81%D0%B5%D0%BB%D0%B0-%D0%A3%D0%B7%D0%B1%D0%B5%D0%BA%D0%B8%D1%81%D1%82%D0%B0%D0%BD%D0%B0-%D0%BF%D1%80%D0%B8-%D0%9C%D0%AD%D0%9F-%D0%A0%D0%A3%D0%B7-727457484339084/"));
+    public void web_open(String url){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(browserIntent);
     }
-    public void telegram_open(){
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/obodqishloqchannel"));
-        startActivity(browserIntent);
+
+    public void ShareAppUrl(){
+        ShareCompat.IntentBuilder.from(MainActivity.this)
+                .setType("text/plain")
+                .setChooserTitle("Chooser title")
+                .setText("http://play.google.com/store/apps/details?id=" + MainActivity.this.getPackageName())
+                .startChooser();
     }
+
+
 
     public void onCreateDialog() {
         progressDialog.setMessage("Authentification...");
@@ -256,5 +268,36 @@ public class MainActivity extends AppCompatActivity{
                     }
                 });
         builder.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        final SweetAlertDialog alertDialog = new SweetAlertDialog(MainActivity.this, SweetAlertDialog.WARNING_TYPE);
+        alertDialog
+                .setTitleText("Are you sure you want to exit application?")
+                .setConfirmText("Exit")
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.addCategory(Intent.CATEGORY_HOME);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }
+                })
+                .setCancelButton("Cancel", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        alertDialog.dismissWithAnimation();
+                    }
+                })
+                .show();
+        //Exit
+        Button btn = (Button) alertDialog.findViewById(R.id.confirm_button);
+        btn.setBackgroundColor(ContextCompat.getColor(MainActivity.this,R.color.alertDialogDelete));
+
+        //Cancel
+        Button btnDelete = (Button) alertDialog.findViewById(R.id.cancel_button);
+        btnDelete.setBackgroundColor(ContextCompat.getColor(MainActivity.this,R.color.colorPrimary));
     }
 }

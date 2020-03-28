@@ -62,6 +62,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class PostActivity extends AppCompatActivity {
 
     /* * * SQLite database * * */
@@ -290,10 +292,13 @@ public class PostActivity extends AppCompatActivity {
                    final String description_val = feedback_description.getText().toString().trim();
                    if (!TextUtils.isEmpty(title_val)&& !TextUtils.isEmpty(description_val)&&imageUri != null && absolute_path != null){
                        PostOfflineData(title_val, description_val, absolute_path, String.valueOf(new Date().getTime()), reg+"/"+dis+"/"+vil, day+"/"+monthString+"/"+year, false, anonymous.isChecked(), false+"_"+anonymous.isChecked());
-                       startActivity(new Intent(PostActivity.this, MainActivity.class));
                    }
                    else{
-                       Toast.makeText(PostActivity.this, "Please fill all fields", Toast.LENGTH_LONG).show();
+                       //Toast.makeText(PostActivity.this, "Please fill all fields", Toast.LENGTH_LONG).show();
+                       new SweetAlertDialog(PostActivity.this, SweetAlertDialog.WARNING_TYPE)
+                               .setTitleText("Empty fields!")
+                               .setContentText("Please fill all fields!")
+                               .show();
                    }
                }
            }
@@ -337,9 +342,23 @@ public class PostActivity extends AppCompatActivity {
         boolean insertData = mDatabaseHelper.addData(title, description, image, timeStamp, location, date, status, anonymous, status_anonymous);
 
         if(insertData){
-            toastMessage("Data successfully stored offline");
+            new SweetAlertDialog(PostActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+                    .setTitleText("Success!")
+                    .setContentText("Feedback successfully saved!")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            startActivity(new Intent(PostActivity.this, MainActivity.class));
+                        }
+                    })
+                    .show();
+            //toastMessage("Data successfully stored offline");
         } else{
-            toastMessage("Something went wrong");
+            new SweetAlertDialog(PostActivity.this, SweetAlertDialog.ERROR_TYPE)
+                    .setTitleText("Oops...")
+                    .setContentText("Something went wrong!")
+                    .show();
+            //toastMessage("Something went wrong");
         }
 
     }
@@ -402,13 +421,26 @@ public class PostActivity extends AppCompatActivity {
                                     newPost.child("admin_reply").setValue("Empty");
                                     progressDialog.dismiss();
 
-                                    startActivity(new Intent(PostActivity.this, MainActivity.class));
+                                    new SweetAlertDialog(PostActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+                                            .setTitleText("Success!")
+                                            .setContentText("Feedback successfully uploaded!")
+                                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                                @Override
+                                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                                    startActivity(new Intent(PostActivity.this, MainActivity.class));
+                                                }
+                                            })
+                                            .show();
                                 }
                             });
                             firebaseUri.addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(getApplicationContext(), "CHECK", Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(getApplicationContext(), "CHECK", Toast.LENGTH_LONG).show();
+                                    new SweetAlertDialog(PostActivity.this, SweetAlertDialog.ERROR_TYPE)
+                                            .setTitleText("Oops...")
+                                            .setContentText("Something went wrong!")
+                                            .show();
                                 }
                             });
                         }
@@ -417,8 +449,6 @@ public class PostActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
                             progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(), "Offline upload success", Toast.LENGTH_LONG).show();
-                            startActivity(new Intent(PostActivity.this, MainActivity.class));
                         }
                     });
         }

@@ -15,6 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
@@ -128,16 +130,14 @@ public class GalleryFragment extends Fragment implements RecyclerViewAdapter.OnN
     }
 
     public void AlertDialog(final int position){
-        builder.setMessage("What do you want to do with this feedback?")
+        /*builder.setMessage("What do you want to do with this feedback?")
                 .setCancelable(true)
                 .setPositiveButton("Upload", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         //finish();
                         if(isNetworkConnected()) {
                             StartPosting(position);
-
                         }
-
                     }
                 })
                 .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
@@ -168,7 +168,52 @@ public class GalleryFragment extends Fragment implements RecyclerViewAdapter.OnN
         AlertDialog alert = builder.create();
         //Setting the title manually
         alert.setTitle("Choose action!");
-        alert.show();
+        alert.show();*/
+
+        SweetAlertDialog alertDialog = new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE);
+        alertDialog
+                .setTitleText("What do you want to do with this feedback?")
+                .setConfirmText("Upload")
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        sDialog.dismissWithAnimation();
+                        if(isNetworkConnected()) {
+                            StartPosting(position);
+                        }
+                    }
+                })
+                .setCancelButton("Delete", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        sDialog.dismissWithAnimation();
+                        Cursor data = mDatabaseHelper.getItemID(images.get(position));
+                        int itemID = -1;
+                        while (data.moveToNext()){
+                            itemID = data.getInt(0);
+                        }
+
+                        if(itemID>-1){
+                            mDatabaseHelper.DeleteRow(itemID);
+                            RemoveFromArrayLists();
+                            InitializeArrayLists();
+                            adapter.notifyItemRemoved(position);
+                        }
+                        else{
+                            Toast.makeText(getContext(), "No id associated with that feedback", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                })
+                .show();
+
+        //Upload button color
+        Button btn = (Button) alertDialog.findViewById(R.id.confirm_button);
+        btn.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.alertDialogSuccess));
+
+        //Delete button color
+        Button btnDelete = (Button) alertDialog.findViewById(R.id.cancel_button);
+        btnDelete.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.alertDialogDelete));
+
     }
 
     private void RemoveFromArrayLists(){
@@ -215,6 +260,8 @@ public class GalleryFragment extends Fragment implements RecyclerViewAdapter.OnN
                                     newPost.child("date").setValue(day+"/"+monthString+"/"+year);
                                     newPost.child("status").setValue(false);
                                     newPost.child("anonymous").setValue(anonymous_states.get(position));
+                                    newPost.child("admin").setValue("new");
+                                    newPost.child("admin_reply").setValue("Empty");
 
                                     newPost.child("status_anonymous").setValue(false+"_"+anonymous_states.get(position));
                                     progressDialog.dismiss();
@@ -232,8 +279,9 @@ public class GalleryFragment extends Fragment implements RecyclerViewAdapter.OnN
                                         RemoveFromArrayLists();
                                         InitializeArrayLists();
                                         adapter.notifyItemRemoved(position);
-                                        new SweetAlertDialog(getContext())
+                                        new SweetAlertDialog(getContext(), SweetAlertDialog.SUCCESS_TYPE)
                                                 .setTitleText("Success!")
+                                                .setContentText("Feedback successfully uploaded!")
                                                 .show();
                                     }
                                     else{

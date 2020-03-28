@@ -47,11 +47,13 @@
 
     <fragment
         android:id="@+id/id_facebook"
-        android:name="com.shukhrat.wbpvp.ui.home.HomeFragment"
-        />
+        android:name="com.shukhrat.wbpvp.ui.home.HomeFragment"/>
     <fragment
         android:id="@+id/id_telegram"
-        android:name="com.shukhrat.wbpvp.ui.home.HomeFragment"
-        />
+        android:name="com.shukhrat.wbpvp.ui.home.HomeFragment"/>
+    <fragment android:id="@+id/id_twitter"
+        android:name="com.shukhrat.wbpvp.ui.home.HomeFragment"/>
+    <fragment android:id="@+id/id_share"
+        android:name="com.shukhrat.wbpvp.ui.home.HomeFragment"/>
 
 </navigation>

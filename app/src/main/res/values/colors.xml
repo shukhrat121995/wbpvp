@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#3700B3</color>
+    <color name="colorPrimary">#753099</color>
+    <color name="colorPrimaryDark">#3c0150</color>
+    <color name="colorAccent">#3c0150</color>
 
     <color name="colorInputStroke">#C2C2C2</color>
+    <color name="alertDialogSuccess">#03C634</color>
+    <color name="alertDialogDelete">#CF0303</color>
 </resources>
