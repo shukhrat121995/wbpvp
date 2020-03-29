@@ -363,11 +363,6 @@ public class PostActivity extends AppCompatActivity {
 
     }
 
-
-    public void toastMessage(String message){
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-    }
-
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 

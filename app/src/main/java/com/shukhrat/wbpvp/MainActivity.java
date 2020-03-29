@@ -49,11 +49,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.shukhrat.wbpvp.admin.AdminActivity;
 import com.shukhrat.wbpvp.authentification.EnterPhoneNumber;
+import com.shukhrat.wbpvp.language.BaseActivity;
+import com.shukhrat.wbpvp.language.LocaleManager;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends BaseActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -153,7 +155,7 @@ public class MainActivity extends AppCompatActivity{
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == READ_STORAGE_PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "permission granted", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.permission_message, Toast.LENGTH_LONG).show();
             } else {
                 // User refused to grant permission.
             }
@@ -192,7 +194,16 @@ public class MainActivity extends AppCompatActivity{
             homeIntent.addCategory( Intent.CATEGORY_HOME );
             homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeIntent);
+        }else if(item.getItemId() == R.id.language_en){
+            setNewLocale(this, LocaleManager.ENGLISH);
+
+        }else if(item.getItemId() == R.id.language_ru){
+            setNewLocale(this, LocaleManager.RUSSIAN);
+
+        }else if(item.getItemId() == R.id.language_uz){
+            setNewLocale(this, LocaleManager.UZBEK);
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -256,7 +267,7 @@ public class MainActivity extends AppCompatActivity{
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 progressDialog.cancel();
-                                Toast.makeText(getApplicationContext(), "Failure",Toast.LENGTH_LONG).show();
+                                //Toast.makeText(getApplicationContext(), "Failure",Toast.LENGTH_LONG).show();
                                 Log.d("MainActivity", "onFailure: "+e.toString());
                             }
                         });
@@ -299,5 +310,11 @@ public class MainActivity extends AppCompatActivity{
         //Cancel
         Button btnDelete = (Button) alertDialog.findViewById(R.id.cancel_button);
         btnDelete.setBackgroundColor(ContextCompat.getColor(MainActivity.this,R.color.colorPrimary));
+    }
+
+    private void setNewLocale(AppCompatActivity mContext, @LocaleManager.LocaleDef String language) {
+        LocaleManager.setNewLocale(this, language);
+        Intent intent = mContext.getIntent();
+        startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
     }
 }

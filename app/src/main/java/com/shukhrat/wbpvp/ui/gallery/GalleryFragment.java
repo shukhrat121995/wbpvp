@@ -200,7 +200,7 @@ public class GalleryFragment extends Fragment implements RecyclerViewAdapter.OnN
                             adapter.notifyItemRemoved(position);
                         }
                         else{
-                            Toast.makeText(getContext(), "No id associated with that feedback", Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getContext(), "No id associated with that feedback", Toast.LENGTH_LONG).show();
                         }
                     }
                 })

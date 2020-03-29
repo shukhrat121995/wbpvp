@@ -1,8 +1,11 @@
 package com.shukhrat.wbpvp;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.res.Configuration;
 
 import com.google.firebase.database.FirebaseDatabase;
+import com.shukhrat.wbpvp.language.LocaleManager;
 import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
@@ -21,4 +24,15 @@ public class pvp extends Application {
         build.setLoggingEnabled(true);
         Picasso.setSingletonInstance(build);
     }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleManager.setLocale(base));
+    }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        LocaleManager.setLocale(this);
+    }
+
 }
