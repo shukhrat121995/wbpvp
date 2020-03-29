@@ -104,7 +104,7 @@ public class AdminActivity extends AppCompatActivity {
                         //Save Scroll Position
                         scrollY = position;
                         //StartNewActivity for admin
-                        Intent intent = new Intent(getApplicationContext(), AdminEdit.class);
+                        Intent intent = new Intent(AdminActivity.this, AdminEdit.class);
                         Bundle b = new Bundle();
                         b.putString("title", model.getFeedback_title());
                         b.putString("description", model.getFeedback_description());

@@ -1,6 +1,7 @@
 package com.shukhrat.wbpvp.ui.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.shukhrat.wbpvp.Blog;
 import com.shukhrat.wbpvp.R;
+import com.shukhrat.wbpvp.user.UserExpandInfo;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -42,6 +44,8 @@ public class HomeFragment extends Fragment {
     private DatabaseReference mDatabase;
 
     private LinearLayoutManager mLayoutManager;
+
+    private static int scrollY = -1;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -83,7 +87,7 @@ public class HomeFragment extends Fragment {
                 }
 
                 @Override
-                protected void onBindViewHolder(BlogViewHolder holder, int position, Blog model) {
+                protected void onBindViewHolder(BlogViewHolder holder, final int position, final Blog model) {
                     // Bind the image_details object to the BlogViewHolder
                     // ...
 
@@ -96,12 +100,27 @@ public class HomeFragment extends Fragment {
                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(getContext(), "test", Toast.LENGTH_LONG).show();
+                            scrollY = position;
+                            //Toast.makeText(getContext(), "test", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(getActivity(), UserExpandInfo.class);
+                            Bundle b = new Bundle();
+                            b.putString("title", model.getFeedback_title());
+                            b.putString("description", model.getFeedback_description());
+                            b.putString("image", model.getImage());
+                            b.putString("location", model.getLocation());
+                            b.putString("date", model.getDate());
+                            b.putString("admin_reply", model.getAdmin_reply());
+                            b.putString("admin_reply_date",model.getAdmin_reply_date());
+                            intent.putExtras(b);
+                            startActivity(intent);
+
                         }
                     });
                 }
             };
 
+        if(scrollY != -1)
+            mBlogList.smoothScrollToPosition(scrollY);
         adapter.startListening();
         mBlogList.setAdapter(adapter);
     }

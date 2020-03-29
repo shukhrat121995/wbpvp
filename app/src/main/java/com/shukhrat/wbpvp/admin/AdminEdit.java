@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -17,6 +18,8 @@ import com.shukhrat.wbpvp.R;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+
+import java.util.Date;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -127,7 +130,14 @@ public class AdminEdit extends AppCompatActivity {
     public void AdminEditPost(String post_status, final boolean status){
         progressDialog.setMessage("Posting...");
         progressDialog.show();
+        Date date = new Date();
+
+        final String year         = (String) DateFormat.format("yyyy", date); // 2013
+        final String monthString  = (String) DateFormat.format("MMM",  date); // Jun
+        final String day          = (String) DateFormat.format("dd",   date); // 20
+
         final String reply = admin_reply.getText().toString().trim();
+
         mDatabase.child("admin").setValue(post_status).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
@@ -137,14 +147,18 @@ public class AdminEdit extends AppCompatActivity {
                         mDatabase.child("status").setValue(status).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-
                                 mDatabase.child("status_anonymous").setValue(status+"_"+anonymous).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        progressDialog.cancel();
-                                        new SweetAlertDialog(AdminEdit.this, SweetAlertDialog.SUCCESS_TYPE)
-                                                .setTitleText("Success!")
-                                                .show();
+                                        mDatabase.child("admin_reply_date").setValue(day+"/"+monthString+"/"+year).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                progressDialog.cancel();
+                                                new SweetAlertDialog(AdminEdit.this, SweetAlertDialog.SUCCESS_TYPE)
+                                                        .setTitleText("Success!")
+                                                        .show();
+                                            }
+                                        });
                                     }
                                 });
                             }

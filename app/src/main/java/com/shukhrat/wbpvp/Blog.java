@@ -9,6 +9,7 @@ public class Blog {
 
     private String admin;
     private String admin_reply;
+    private String admin_reply_date;
 
     public Blog(){
 
@@ -96,5 +97,13 @@ public class Blog {
 
     public void setAdmin_reply(String admin_reply) {
         this.admin_reply = admin_reply;
+    }
+
+    public String getAdmin_reply_date() {
+        return admin_reply_date;
+    }
+
+    public void setAdmin_reply_date(String admin_reply_date) {
+        this.admin_reply_date = admin_reply_date;
     }
 }
