@@ -9,8 +9,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.shukhrat.wbpvp.R;
+import com.shukhrat.wbpvp.language.BaseActivity;
 
-public class EnterPhoneNumber extends AppCompatActivity {
+public class EnterPhoneNumber extends BaseActivity {
 
     private Spinner spinner;
     private EditText editText;

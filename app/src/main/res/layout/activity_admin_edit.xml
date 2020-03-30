@@ -72,7 +72,7 @@
                 android:id="@+id/admin_reply"
                 android:gravity="start"
                 android:padding="5dp"
-                android:hint="Reply"
+                android:hint="@string/reply"
                 android:background="@drawable/input_outline"
                 android:layout_height="100dp"/>
         </LinearLayout>
@@ -93,7 +93,7 @@
             android:insetTop="0dp"
             android:id="@+id/admin_reject"
             android:insetBottom="0dp"
-            android:text="Reject"
+            android:text="@string/reject"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="#FFF"
             android:textStyle="bold"
@@ -112,7 +112,7 @@
             android:layout_weight="1"
             android:insetTop="0dp"
             android:insetBottom="0dp"
-            android:text="Verify"
+            android:text="@string/verify"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="#FFF"
             android:textStyle="bold"

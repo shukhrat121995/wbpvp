@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
-            android:text="May I ask your phone number?"
+            android:text="Enter your phone number"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
             android:textColor="@color/colorPrimary" />
 
@@ -70,7 +70,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
             android:background="@color/colorPrimaryDark"
-            android:text="Continue"
+            android:text="@string/continue_button"
             android:textAllCaps="false"
             android:textColor="#cdd8f1" />
 

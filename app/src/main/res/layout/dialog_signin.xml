@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:scaleType="center"
-        android:text="PVP moderator"
+        android:text="@string/pvp_moderator"
         android:textColor="#FFF"
         android:textSize="20sp"
         android:gravity="center"
@@ -20,7 +20,7 @@
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
         android:layout_marginBottom="4dp"
-        android:hint="Username" />
+        android:hint="@string/username" />
     <EditText
         android:id="@+id/password"
         android:inputType="textPassword"
@@ -31,5 +31,5 @@
         android:layout_marginRight="4dp"
         android:layout_marginBottom="16dp"
         android:fontFamily="sans-serif"
-        android:hint="Password"/>
+        android:hint="@string/password"/>
 </LinearLayout>

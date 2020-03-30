@@ -3,30 +3,19 @@ package com.shukhrat.wbpvp.ui.gallery;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,14 +28,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.shukhrat.wbpvp.MainActivity;
-import com.shukhrat.wbpvp.PostActivity;
 import com.shukhrat.wbpvp.R;
 import com.shukhrat.wbpvp.database.DatabaseHelper;
 import com.shukhrat.wbpvp.recyclerview.RecyclerViewAdapter;
 
 import java.io.File;
-import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -172,8 +158,8 @@ public class GalleryFragment extends Fragment implements RecyclerViewAdapter.OnN
 
         SweetAlertDialog alertDialog = new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE);
         alertDialog
-                .setTitleText("What do you want to do with this feedback?")
-                .setConfirmText("Upload")
+                .setTitleText(getString(R.string.what_do_you_want_to_do_with_this_feedback))
+                .setConfirmText(getString(R.string.upload))
                 .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sDialog) {
@@ -183,7 +169,7 @@ public class GalleryFragment extends Fragment implements RecyclerViewAdapter.OnN
                         }
                     }
                 })
-                .setCancelButton("Delete", new SweetAlertDialog.OnSweetClickListener() {
+                .setCancelButton(getString(R.string.delete), new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sDialog) {
                         sDialog.dismissWithAnimation();
@@ -209,10 +195,12 @@ public class GalleryFragment extends Fragment implements RecyclerViewAdapter.OnN
         //Upload button color
         Button btn = (Button) alertDialog.findViewById(R.id.confirm_button);
         btn.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.alertDialogSuccess));
+        btn.setTextSize(14);
 
         //Delete button color
         Button btnDelete = (Button) alertDialog.findViewById(R.id.cancel_button);
         btnDelete.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.alertDialogDelete));
+        btnDelete.setTextSize(14);
 
     }
 
@@ -227,7 +215,7 @@ public class GalleryFragment extends Fragment implements RecyclerViewAdapter.OnN
     }
 
     private void StartPosting(final int position){
-        progressDialog.setMessage("Posting Feedback...");
+        progressDialog.setMessage(getString(R.string.posting_feedback));
         progressDialog.show();
         Uri file = Uri.fromFile(new File(images.get(position)));
         if(file != null)
@@ -280,15 +268,15 @@ public class GalleryFragment extends Fragment implements RecyclerViewAdapter.OnN
                                         InitializeArrayLists();
                                         adapter.notifyItemRemoved(position);
                                         new SweetAlertDialog(getContext(), SweetAlertDialog.SUCCESS_TYPE)
-                                                .setTitleText("Success!")
-                                                .setContentText("Feedback successfully uploaded!")
+                                                .setTitleText(getString(R.string.success))
+                                                .setContentText(getString(R.string.feedback_successfully_uploaded))
                                                 .show();
                                     }
                                     else{
                                         //Toast.makeText(getContext(), "No id associated with that feedback", Toast.LENGTH_LONG).show();
                                         new SweetAlertDialog(getContext(), SweetAlertDialog.ERROR_TYPE)
-                                                .setTitleText("Oops...")
-                                                .setContentText("Something went wrong!")
+                                                .setTitleText(getString(R.string.oops))
+                                                .setContentText(getString(R.string.something_went_wrong))
                                                 .show();
                                     }
                                 }
@@ -301,8 +289,8 @@ public class GalleryFragment extends Fragment implements RecyclerViewAdapter.OnN
                             progressDialog.dismiss();
                             //Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_LONG).show();
                             new SweetAlertDialog(getContext(), SweetAlertDialog.ERROR_TYPE)
-                                    .setTitleText("Oops...")
-                                    .setContentText("Something went wrong!")
+                                    .setTitleText(getString(R.string.oops))
+                                    .setContentText(getString(R.string.something_went_wrong))
                                     .show();
                         }
                     });

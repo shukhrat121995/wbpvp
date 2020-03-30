@@ -31,7 +31,7 @@
             android:padding="10dp"
             android:background="@drawable/input_outline"
             android:layout_height="50dp"
-            android:hint="Feedback title..."
+            android:hint="@string/feedback_title"
             android:ems="10"
             android:inputType="textPersonName"
             />
@@ -42,7 +42,7 @@
             android:textSize="18sp"
             android:padding="10dp"
             android:background="@drawable/input_outline"
-            android:hint="Feedback description..."
+            android:hint="@string/feedback_description"
             android:layout_below="@+id/feedback_title"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -106,11 +106,11 @@
             android:layout_below="@id/layout_village"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Anonymous feedback" />
+            android:text="@string/anonymous_feedback" />
 
         <Button
             android:layout_width="match_parent"
-            android:text="Submit Feedback"
+            android:text="@string/submit_feedback"
             android:id="@+id/submit_feedback"
             android:textColor="#FFF"
             android:layout_margin="10dp"

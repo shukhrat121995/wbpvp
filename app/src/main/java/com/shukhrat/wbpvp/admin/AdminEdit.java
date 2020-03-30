@@ -15,6 +15,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.shukhrat.wbpvp.R;
+import com.shukhrat.wbpvp.language.BaseActivity;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -23,7 +24,7 @@ import java.util.Date;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class AdminEdit extends AppCompatActivity {
+public class AdminEdit extends BaseActivity {
 
     String title, description, image, location, date, feedback_id, admin_reply_text = null;
 

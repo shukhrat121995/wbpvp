@@ -37,8 +37,10 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.appus.splash.Splash;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -188,13 +190,13 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.action_sign_out){
+        /*if(item.getItemId() == R.id.action_sign_out){
             FirebaseAuth.getInstance().signOut();
             Intent homeIntent = new Intent(Intent.ACTION_MAIN);
             homeIntent.addCategory( Intent.CATEGORY_HOME );
             homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeIntent);
-        }else if(item.getItemId() == R.id.language_en){
+        }else */if(item.getItemId() == R.id.language_en){
             setNewLocale(this, LocaleManager.ENGLISH);
 
         }else if(item.getItemId() == R.id.language_ru){
@@ -240,20 +242,23 @@ public class MainActivity extends BaseActivity {
         password = view.findViewById(R.id.password);
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
-        builder.setView(view)
-                // Add action buttons
-                .setPositiveButton("Sign in", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        progressDialog.show();
-                        if(TextUtils.isEmpty(username.getText().toString())){
-                            return;
-                        }
-                        if(TextUtils.isEmpty(password.getText().toString())){
-                            return;
-                        }
+        builder.setView(view);
+        builder.setPositiveButton(R.string.sign_in, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                progressDialog.show();
+                if (TextUtils.isEmpty(username.getText().toString())) {
+                    progressDialog.cancel();
+                    Toast.makeText(MainActivity.this, R.string.failure,Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (TextUtils.isEmpty(password.getText().toString())) {
+                    progressDialog.cancel();
+                    Toast.makeText(MainActivity.this, R.string.failure,Toast.LENGTH_LONG).show();
+                    return;
+                }
 
-                        //Authentication
+                //Authentication
                         mAuth.signInWithEmailAndPassword(username.getText().toString(), password.getText().toString())
                              .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                     @Override
@@ -262,22 +267,23 @@ public class MainActivity extends BaseActivity {
                                         Intent intent = new Intent(getApplicationContext(), AdminActivity.class);
                                         startActivity(intent);
                                     }
-                                })
-                             .addOnFailureListener(new OnFailureListener() {
+                             })
+                            .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 progressDialog.cancel();
-                                //Toast.makeText(getApplicationContext(), "Failure",Toast.LENGTH_LONG).show();
+                                Toast.makeText(MainActivity.this, R.string.failure,Toast.LENGTH_LONG).show();
                                 Log.d("MainActivity", "onFailure: "+e.toString());
                             }
-                        });
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                });
+                            });
+
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });// Add action buttons
         builder.show();
     }
 
@@ -306,10 +312,11 @@ public class MainActivity extends BaseActivity {
         //Exit
         Button btn = (Button) alertDialog.findViewById(R.id.confirm_button);
         btn.setBackgroundColor(ContextCompat.getColor(MainActivity.this,R.color.alertDialogDelete));
-
+        btn.setTextSize(14);
         //Cancel
         Button btnDelete = (Button) alertDialog.findViewById(R.id.cancel_button);
         btnDelete.setBackgroundColor(ContextCompat.getColor(MainActivity.this,R.color.colorPrimary));
+        btnDelete.setTextSize(14);
     }
 
     private void setNewLocale(AppCompatActivity mContext, @LocaleManager.LocaleDef String language) {

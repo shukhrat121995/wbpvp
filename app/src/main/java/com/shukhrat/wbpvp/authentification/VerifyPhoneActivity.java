@@ -20,11 +20,12 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.shukhrat.wbpvp.PostActivity;
 import com.shukhrat.wbpvp.R;
+import com.shukhrat.wbpvp.language.BaseActivity;
 
 import java.util.concurrent.TimeUnit;
 
 
-public class VerifyPhoneActivity extends AppCompatActivity {
+public class VerifyPhoneActivity extends BaseActivity {
 
 
     private String verificationId;

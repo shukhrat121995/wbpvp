@@ -20,9 +20,9 @@
         <item
             android:id="@+id/nav_admin"
             android:icon="@mipmap/baseline_account_circle_white_48"
-            android:title="Admin" />
+            android:title="@string/admin" />
     </group>
-    <item android:title="Social">
+    <item android:title="@string/social">
         <menu>
             <item
                 android:id="@+id/id_facebook"
@@ -37,12 +37,12 @@
                 android:id="@+id/id_telegram"/>
         </menu>
     </item>
-    <item android:title="Additions">
+    <item android:title="@string/additions">
         <menu>
             <item
                 android:id="@+id/id_share"
                 android:icon="@drawable/baseline_share_24"
-                android:title="Share"
+                android:title="@string/share"
                 />
         </menu>
     </item>

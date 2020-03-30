@@ -10,11 +10,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.shukhrat.wbpvp.R;
+import com.shukhrat.wbpvp.language.BaseActivity;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
-public class UserExpandInfo extends AppCompatActivity {
+public class UserExpandInfo extends BaseActivity {
 
     LinearLayout adminContainer;
     TextView admin_reply, admin_reply_date;

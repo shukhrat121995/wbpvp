@@ -49,6 +49,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.shukhrat.wbpvp.database.DatabaseHelper;
+import com.shukhrat.wbpvp.language.BaseActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -64,7 +65,7 @@ import java.util.Map;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class PostActivity extends AppCompatActivity {
+public class PostActivity extends BaseActivity {
 
     /* * * SQLite database * * */
     private static final String TAG = "PostActivity";
@@ -105,7 +106,7 @@ public class PostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
-        setTitle("Post Feedback");
+        setTitle(getString(R.string.post_feedback));
 
         mStorage = FirebaseStorage.getInstance().getReference("Feedback_images");
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Feedback");
@@ -133,67 +134,67 @@ public class PostActivity extends AppCompatActivity {
 
         //* * * Spinner Regions start * * *
         arrayList_Regions = new ArrayList<>();
-        arrayList_Regions.add(0, "Select Region...");
-        arrayList_Regions.add("Andijan");
-        arrayList_Regions.add("Jizzakh");
-        arrayList_Regions.add("Namangan");
-        arrayList_Regions.add("Syrdarya");
-        arrayList_Regions.add("Fergana");
+        arrayList_Regions.add(0, getString(R.string.select_region));
+        arrayList_Regions.add(getString(R.string.andijan));
+        arrayList_Regions.add(getString(R.string.jizzakh));
+        arrayList_Regions.add(getString(R.string.namangan));
+        arrayList_Regions.add(getString(R.string.syrdarya));
+        arrayList_Regions.add(getString(R.string.fergana));
 
 
         arrayAdapter_Regions = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item,arrayList_Regions);
         spinner_region.setAdapter(arrayAdapter_Regions);
 
         arrayList_Districts = new ArrayList<>();
-        arrayList_Districts.add(0, "Select District...");
+        arrayList_Districts.add(0, getString(R.string.select_district));
 
         spinner_region.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position == 0){
                     arrayList_Districts.clear();
-                    arrayList_Districts.add(0, "Select District...");
+                    arrayList_Districts.add(0, getString(R.string.select_district));
                 }
                 else {
                     Toast.makeText(PostActivity.this, arrayList_Regions.get(position), Toast.LENGTH_SHORT).show();
                     reg = arrayList_Regions.get(position);
 
-                    if(reg.equals("Andijan")){
+                    if(reg.equals(getString(R.string.andijan))){
                         arrayList_Districts.clear();
-                        arrayList_Districts.add(0, "Select District...");
-                        arrayList_Districts.add("Bulakbashi");
-                        arrayList_Districts.add("Paxtaobod");
-                        arrayList_Districts.add("Markhamat");
-                        arrayList_Districts.add("Ulugnar");
-                        arrayList_Districts.add("Boz");
-                    }else if(reg.equals("Jizzakh")){
+                        arrayList_Districts.add(0, getString(R.string.select_district));
+                        arrayList_Districts.add(getString(R.string.bulakbashi));
+                        arrayList_Districts.add(getString(R.string.paxtaobod));
+                        arrayList_Districts.add(getString(R.string.markhamat));
+                        arrayList_Districts.add(getString(R.string.ulugnar));
+                        arrayList_Districts.add(getString(R.string.boz));
+                    }else if(reg.equals(getString(R.string.jizzakh))){
                         arrayList_Districts.clear();
-                        arrayList_Districts.add(0, "Select District...");
-                        arrayList_Districts.add("Bakhmal");
-                        arrayList_Districts.add("Zomin");
-                        arrayList_Districts.add("Forish");
-                        arrayList_Districts.add("Yangiobod");
-                    }else if(reg.equals("Namangan")){
+                        arrayList_Districts.add(0, getString(R.string.select_district));
+                        arrayList_Districts.add(getString(R.string.bakhmal));
+                        arrayList_Districts.add(getString(R.string.zomin));
+                        arrayList_Districts.add(getString(R.string.forish));
+                        arrayList_Districts.add(getString(R.string.yangiobod));
+                    }else if(reg.equals(getString(R.string.namangan))){
                         arrayList_Districts.clear();
-                        arrayList_Districts.add(0, "Select District...");
-                        arrayList_Districts.add("Minbulak");
-                        arrayList_Districts.add("Pop");
-                        arrayList_Districts.add("Chartak");
-                        arrayList_Districts.add("Chust");
-                        arrayList_Districts.add("Yangikurgan");
-                    }else if(reg.equals("Syrdarya")){
+                        arrayList_Districts.add(0, getString(R.string.select_district));
+                        arrayList_Districts.add(getString(R.string.minbulak));
+                        arrayList_Districts.add(getString(R.string.pop));
+                        arrayList_Districts.add(getString(R.string.chartak));
+                        arrayList_Districts.add(getString(R.string.chust));
+                        arrayList_Districts.add(getString(R.string.yangikurgan));
+                    }else if(reg.equals(getString(R.string.syrdarya))){
                         arrayList_Districts.clear();
-                        arrayList_Districts.add(0, "Select District...");
-                        arrayList_Districts.add("Boevut");
-                        arrayList_Districts.add("Sardoba");
-                        arrayList_Districts.add("Hovos");
-                    }else if(reg.equals("Fergana")){
+                        arrayList_Districts.add(0, getString(R.string.select_district));
+                        arrayList_Districts.add(getString(R.string.boevut));
+                        arrayList_Districts.add(getString(R.string.sardoba));
+                        arrayList_Districts.add(getString(R.string.hovos));
+                    }else if(reg.equals(getString(R.string.fergana))){
                         arrayList_Districts.clear();
-                        arrayList_Districts.add(0, "Select District...");
-                        arrayList_Districts.add("Sokh");
-                        arrayList_Districts.add("Furqat");
-                        arrayList_Districts.add("Yazyavan");
-                        arrayList_Districts.add("Kushtepa");
+                        arrayList_Districts.add(0, getString(R.string.select_district));
+                        arrayList_Districts.add(getString(R.string.sokh));
+                        arrayList_Districts.add(getString(R.string.furqat));
+                        arrayList_Districts.add(getString(R.string.yazyavan));
+                        arrayList_Districts.add(getString(R.string.kushtepa));
                     }
                 }
                 arrayAdapter_Districts = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item,arrayList_Districts);
@@ -238,8 +239,8 @@ public class PostActivity extends AppCompatActivity {
         //* * * Spinner Villages start * * *
 
         arrayList_Villages = new ArrayList<>();
-        arrayList_Villages.add(0,"Select Village...");
-        arrayList_Villages.add("Sokhil MFY");
+        arrayList_Villages.add(0,getString(R.string.select_village));
+        arrayList_Villages.add(getString(R.string.sokhil_mfy));
 
 
         arrayAdapter_Vilalges = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item,arrayList_Villages);
@@ -296,8 +297,8 @@ public class PostActivity extends AppCompatActivity {
                    else{
                        //Toast.makeText(PostActivity.this, "Please fill all fields", Toast.LENGTH_LONG).show();
                        new SweetAlertDialog(PostActivity.this, SweetAlertDialog.WARNING_TYPE)
-                               .setTitleText("Empty fields!")
-                               .setContentText("Please fill all fields!")
+                               .setTitleText(getString(R.string.empty_fields))
+                               .setContentText(getString(R.string.please_fill_all_fields))
                                .show();
                    }
                }
@@ -343,8 +344,8 @@ public class PostActivity extends AppCompatActivity {
 
         if(insertData){
             new SweetAlertDialog(PostActivity.this, SweetAlertDialog.SUCCESS_TYPE)
-                    .setTitleText("Success!")
-                    .setContentText("Feedback successfully saved!")
+                    .setTitleText(getString(R.string.success))
+                    .setContentText(getString(R.string.feedback_successfully_saved))
                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
@@ -355,8 +356,8 @@ public class PostActivity extends AppCompatActivity {
             //toastMessage("Data successfully stored offline");
         } else{
             new SweetAlertDialog(PostActivity.this, SweetAlertDialog.ERROR_TYPE)
-                    .setTitleText("Oops...")
-                    .setContentText("Something went wrong!")
+                    .setTitleText(getString(R.string.oops))
+                    .setContentText(getString(R.string.something_went_wrong))
                     .show();
             //toastMessage("Something went wrong");
         }
@@ -370,7 +371,7 @@ public class PostActivity extends AppCompatActivity {
     }
 
     private void startPosting(){
-        progressDialog.setMessage("Posting Feedback...");
+        progressDialog.setMessage(getString(R.string.posting_feedback));
         progressDialog.show();
         final String title_val = feedback_title.getText().toString().trim();
         final String description_val = feedback_description.getText().toString().trim();
@@ -417,8 +418,8 @@ public class PostActivity extends AppCompatActivity {
                                     progressDialog.dismiss();
 
                                     new SweetAlertDialog(PostActivity.this, SweetAlertDialog.SUCCESS_TYPE)
-                                            .setTitleText("Success!")
-                                            .setContentText("Feedback successfully uploaded!")
+                                            .setTitleText(getString(R.string.success))
+                                            .setContentText(getString(R.string.feedback_successfully_uploaded))
                                             .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                                 @Override
                                                 public void onClick(SweetAlertDialog sweetAlertDialog) {
@@ -433,8 +434,8 @@ public class PostActivity extends AppCompatActivity {
                                 public void onFailure(@NonNull Exception e) {
                                     //Toast.makeText(getApplicationContext(), "CHECK", Toast.LENGTH_LONG).show();
                                     new SweetAlertDialog(PostActivity.this, SweetAlertDialog.ERROR_TYPE)
-                                            .setTitleText("Oops...")
-                                            .setContentText("Something went wrong!")
+                                            .setTitleText(getString(R.string.oops))
+                                            .setContentText(getString(R.string.something_went_wrong))
                                             .show();
                                 }
                             });

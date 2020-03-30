@@ -29,13 +29,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.shukhrat.wbpvp.Blog;
 import com.shukhrat.wbpvp.R;
+import com.shukhrat.wbpvp.language.BaseActivity;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
-public class AdminActivity extends AppCompatActivity {
+public class AdminActivity extends BaseActivity {
 
     private RecyclerView mFeedbackList;
     private DatabaseReference mDatabase;
