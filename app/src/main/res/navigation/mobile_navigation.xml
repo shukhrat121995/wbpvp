@@ -55,5 +55,7 @@
         android:name="com.shukhrat.wbpvp.ui.home.HomeFragment"/>
     <fragment android:id="@+id/id_share"
         android:name="com.shukhrat.wbpvp.ui.home.HomeFragment"/>
+    <fragment android:id="@+id/logout"
+        android:name="com.shukhrat.wbpvp.ui.home.HomeFragment"/>
 
 </navigation>

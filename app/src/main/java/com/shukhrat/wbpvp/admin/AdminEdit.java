@@ -47,7 +47,7 @@ public class AdminEdit extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_edit);
-        setTitle("Verify Post");
+        setTitle(getString(R.string.verify_post));
         //retrieve data from AdminActivity
         Bundle b = getIntent().getExtras();
         if(b != null){
@@ -129,7 +129,7 @@ public class AdminEdit extends BaseActivity {
     }
 
     public void AdminEditPost(String post_status, final boolean status){
-        progressDialog.setMessage("Posting...");
+        progressDialog.setMessage(getString(R.string.posting_feedback));
         progressDialog.show();
         Date date = new Date();
 
@@ -156,7 +156,7 @@ public class AdminEdit extends BaseActivity {
                                             public void onSuccess(Void aVoid) {
                                                 progressDialog.cancel();
                                                 new SweetAlertDialog(AdminEdit.this, SweetAlertDialog.SUCCESS_TYPE)
-                                                        .setTitleText("Success!")
+                                                        .setTitleText(getString(R.string.success))
                                                         .show();
                                             }
                                         });

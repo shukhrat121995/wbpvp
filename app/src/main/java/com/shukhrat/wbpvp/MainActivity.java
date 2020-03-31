@@ -115,7 +115,7 @@ public class MainActivity extends BaseActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_feedback, R.id.nav_admin,R.id.nav_dashboard, R.id.id_facebook, R.id.id_telegram, R.id.id_twitter, R.id.id_share)
+                R.id.nav_home, R.id.nav_feedback, R.id.nav_admin,R.id.nav_dashboard, R.id.id_facebook, R.id.id_telegram, R.id.id_twitter, R.id.id_share, R.id.logout)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -129,14 +129,25 @@ public class MainActivity extends BaseActivity {
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
                 if(destination.getId() == R.id.id_facebook){
                     web_open("https://www.facebook.com/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82-%D0%91%D0%BB%D0%B0%D0%B3%D0%BE%D1%83%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BD%D0%BD%D1%8B%D0%B5-%D1%81%D0%B5%D0%BB%D0%B0-%D0%A3%D0%B7%D0%B1%D0%B5%D0%BA%D0%B8%D1%81%D1%82%D0%B0%D0%BD%D0%B0-%D0%BF%D1%80%D0%B8-%D0%9C%D0%AD%D0%9F-%D0%A0%D0%A3%D0%B7-727457484339084/");
-                }if (destination.getId() == R.id.id_telegram){
+                }else if (destination.getId() == R.id.id_telegram){
                     web_open("https://t.me/obodqishloqchannel");
-                }if (destination.getId() == R.id.nav_admin){
+                }else if (destination.getId() == R.id.nav_admin){
                     onCreateDialog();
-                }if(destination.getId()==R.id.id_twitter){
+                }else if(destination.getId()==R.id.id_twitter){
                     web_open("https://twitter.com/pvp24032020");
-                }if(destination.getId()==R.id.id_share){
+                }else if(destination.getId()==R.id.id_share){
                     ShareAppUrl();
+                }else if(destination.getId()==R.id.logout){
+                    if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+                        FirebaseAuth.getInstance().signOut();
+                        Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+                        homeIntent.addCategory(Intent.CATEGORY_HOME);
+                        homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(homeIntent);
+                    } else{
+                        Intent intent = new Intent(MainActivity.this, EnterPhoneNumber.class);
+                        startActivity(intent);
+                    }
                 }
             }
         });
@@ -170,14 +181,28 @@ public class MainActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser!=null){
-            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-            View headerView = navigationView.getHeaderView(0);
-            TextView navUsername = (TextView) headerView.findViewById(R.id.user_uid);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        Menu nv = navigationView.getMenu();
+        MenuItem item = nv.findItem(R.id.logout);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.user_uid);
+        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+
+
             navUsername.setText("ID: "+currentUser.getUid());
+            item.setTitle(getString(R.string.logout));
+
+        }else{
+            navUsername.setText("ID: null");
+            item.setTitle(getString(R.string.sign_in));
         }
+    }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -191,11 +216,7 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         /*if(item.getItemId() == R.id.action_sign_out){
-            FirebaseAuth.getInstance().signOut();
-            Intent homeIntent = new Intent(Intent.ACTION_MAIN);
-            homeIntent.addCategory( Intent.CATEGORY_HOME );
-            homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(homeIntent);
+
         }else */if(item.getItemId() == R.id.language_en){
             setNewLocale(this, LocaleManager.ENGLISH);
 
@@ -291,8 +312,8 @@ public class MainActivity extends BaseActivity {
     public void onBackPressed() {
         final SweetAlertDialog alertDialog = new SweetAlertDialog(MainActivity.this, SweetAlertDialog.WARNING_TYPE);
         alertDialog
-                .setTitleText("Are you sure you want to exit application?")
-                .setConfirmText("Exit")
+                .setTitleText(getString(R.string.are_you_sure_you_want_to_exit_application))
+                .setConfirmText(getString(R.string.exit))
                 .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sDialog) {
@@ -302,7 +323,7 @@ public class MainActivity extends BaseActivity {
                         startActivity(intent);
                     }
                 })
-                .setCancelButton("Cancel", new SweetAlertDialog.OnSweetClickListener() {
+                .setCancelButton(getString(R.string.cancel), new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sDialog) {
                         alertDialog.dismissWithAnimation();

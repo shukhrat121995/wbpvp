@@ -50,7 +50,7 @@ public class AdminActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
-        setTitle("Administrator");
+        setTitle(getString(R.string.administrator));
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Feedback");
         mDatabase.keepSynced(true);

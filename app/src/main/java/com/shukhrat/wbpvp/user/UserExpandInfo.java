@@ -29,7 +29,7 @@ public class UserExpandInfo extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expand_info);
-        setTitle("Feedback Info");
+        setTitle(getString(R.string.feedback_info));
         //retrieve data from AdminActivity
         Bundle b = getIntent().getExtras();
         if(b != null){
