@@ -7,7 +7,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_sign_out">Sign out</string>
 
-    <string name="menu_home">Отзывы (онлайн)</string>
+    <string name="menu_home">Главная</string>
     <string name="menu_feedback">Сохраненные отзывы</string>
     <string name="menu_dashboard">Опросники</string>
 
@@ -84,5 +84,9 @@
     <string name="feedback_info">Информация об отзыве</string>
     <string name="administrator">Администратор</string>
     <string name="verify_post">Подтверждение отзыва</string>
+
+    <string name="feedback">Отзывы</string>
+    <string name="news">Новости</string>
+    <string name="open_data">Данные</string>
 
 </resources>

@@ -2,7 +2,6 @@ package com.shukhrat.wbpvp;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,19 +35,12 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.appus.splash.Splash;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.shukhrat.wbpvp.admin.AdminActivity;
 import com.shukhrat.wbpvp.authentification.EnterPhoneNumber;
 import com.shukhrat.wbpvp.language.BaseActivity;
@@ -70,8 +62,6 @@ public class MainActivity extends BaseActivity {
     private ProgressDialog progressDialog;
 
 
-
-
     /* * * Permission Read External Storage*/
     static final Integer READ_STORAGE_PERMISSION_REQUEST_CODE=0x3;
     /* * * Permission Read External Storage*/
@@ -83,11 +73,6 @@ public class MainActivity extends BaseActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /*Splash.Builder splash = new Splash.Builder(this, getSupportActionBar());
-        splash.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-        splash.setSplashImage(getResources().getDrawable(R.drawable.logo)).
-        splash.perform();*/
-
         mAuth = FirebaseAuth.getInstance();
 
         mUID = (TextView)findViewById(R.id.user_uid);
@@ -95,27 +80,13 @@ public class MainActivity extends BaseActivity {
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
-                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-                    Intent intent = new Intent(MainActivity.this, PostActivity.class);
-                    startActivity(intent);
-                } else{
-                    Intent intent = new Intent(MainActivity.this, EnterPhoneNumber.class);
-                    startActivity(intent);
-                }
-            }
-        });
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         final NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_feedback, R.id.nav_admin,R.id.nav_dashboard, R.id.id_facebook, R.id.id_telegram, R.id.id_twitter, R.id.id_share, R.id.logout)
+                 R.id.nav_main, R.id.nav_feedback, R.id.nav_admin,R.id.nav_dashboard, R.id.id_facebook, R.id.id_telegram, R.id.id_twitter, R.id.id_share, R.id.logout)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -158,9 +129,6 @@ public class MainActivity extends BaseActivity {
                     READ_STORAGE_PERMISSION_REQUEST_CODE);
             return;
         }
-
-
-
     }
 
     @Override
@@ -174,8 +142,6 @@ public class MainActivity extends BaseActivity {
             }
         }
     }
-
-
 
     @Override
     protected void onStart() {

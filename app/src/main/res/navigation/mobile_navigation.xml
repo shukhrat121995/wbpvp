@@ -3,36 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_main">
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.shukhrat.wbpvp.ui.home.HomeFragment"
+        android:name="com.shukhrat.wbpvp.ui.feedback_online.FeedbackFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home">
-
-        <action
-            android:id="@+id/action_HomeFragment_to_HomeSecondFragment"
-            app:destination="@id/nav_home_second" />
     </fragment>
+
     <fragment
-        android:id="@+id/nav_home_second"
-        android:name="com.shukhrat.wbpvp.ui.home.HomeSecondFragment"
-        android:label="@string/home_second"
-        tools:layout="@layout/fragment_home_second">
-        <action
-            android:id="@+id/action_HomeSecondFragment_to_HomeFragment"
-            app:destination="@id/nav_home" />
-
-        <argument
-            android:name="myArg"
-            app:argType="string" />
+        android:id="@+id/nav_main"
+        android:name="com.shukhrat.wbpvp.ui.mainpage.MainPageFragment"
+        tools:layout="@layout/fragment_main_page">
     </fragment>
+
 
     <fragment
         android:id="@+id/nav_feedback"
-        android:name="com.shukhrat.wbpvp.ui.gallery.GalleryFragment"
-        android:label="@string/menu_feedback"
+        android:name="com.shukhrat.wbpvp.ui.feedback_offline.SavedFeedbackFragment"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
@@ -41,21 +30,31 @@
         android:label="@string/menu_dashboard"
         tools:layout="@layout/fragment_slideshow" />
     <fragment
+        android:id="@+id/nav_news"
+        android:name="com.shukhrat.wbpvp.ui.news.NewsFragment"
+        android:label="@string/news"
+        tools:layout="@layout/fragment_news" />
+    <fragment
+        android:id="@+id/nav_opendata"
+        android:name="com.shukhrat.wbpvp.ui.opendata.OpenDataFragment"
+        android:label="@string/open_data"
+        tools:layout="@layout/fragment_open_data" />
+    <fragment
         android:id="@+id/nav_admin"
-        android:name="com.shukhrat.wbpvp.ui.home.HomeFragment"
+        android:name="com.shukhrat.wbpvp.ui.feedback_online.FeedbackFragment"
         />
 
     <fragment
         android:id="@+id/id_facebook"
-        android:name="com.shukhrat.wbpvp.ui.home.HomeFragment"/>
+        android:name="com.shukhrat.wbpvp.ui.feedback_online.FeedbackFragment"/>
     <fragment
         android:id="@+id/id_telegram"
-        android:name="com.shukhrat.wbpvp.ui.home.HomeFragment"/>
+        android:name="com.shukhrat.wbpvp.ui.feedback_online.FeedbackFragment"/>
     <fragment android:id="@+id/id_twitter"
-        android:name="com.shukhrat.wbpvp.ui.home.HomeFragment"/>
+        android:name="com.shukhrat.wbpvp.ui.feedback_online.FeedbackFragment"/>
     <fragment android:id="@+id/id_share"
-        android:name="com.shukhrat.wbpvp.ui.home.HomeFragment"/>
+        android:name="com.shukhrat.wbpvp.ui.feedback_online.FeedbackFragment"/>
     <fragment android:id="@+id/logout"
-        android:name="com.shukhrat.wbpvp.ui.home.HomeFragment"/>
+        android:name="com.shukhrat.wbpvp.ui.feedback_online.FeedbackFragment"/>
 
 </navigation>

@@ -7,7 +7,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_sign_out">Chiqish</string>
 
-    <string name="menu_home">Izohlar (onlayn)</string>
+    <string name="menu_home">Asosiy Sahifa</string>
     <string name="menu_feedback">Saqlangan izohlar</string>
     <string name="menu_dashboard">So\'rovnomalar</string>
 
@@ -77,9 +77,13 @@
     <string name="cancel">Bekor qilish</string>
     <string name="failure">Login yoki parol noto\'g\'ri</string>
     <string name="logout">Chiqish</string>
-    <string name="are_you_sure_you_want_to_exit_application">Haqiqatan ham dasturdan chiqmoqchisiz?</string>
+    <string name="are_you_sure_you_want_to_exit_application">Haqiqatan ham dasturdan chiqmoqchimisiz?</string>
     <string name="exit">Chiqish</string>
     <string name="feedback_info">Izoh to\'g\'risida ma\'lumot</string>
     <string name="administrator">Administrator</string>
     <string name="verify_post">Izoh tasdiqlash</string>
+
+    <string name="feedback">Izohlar</string>
+    <string name="news">Yangiliklar</string>
+    <string name="open_data">Ma\'lumotlar</string>
 </resources>

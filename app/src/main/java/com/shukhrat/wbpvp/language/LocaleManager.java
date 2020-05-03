@@ -53,23 +53,22 @@ public class LocaleManager {
         SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         mPreferences.edit().putString(LANGUAGE_KEY, localeKey).apply();
     }
-    /**
+    /*
      * update resource
      */
     private static Context updateResources(Context context, String language) {
         Locale locale = new Locale(language);
-        Locale.setDefault(locale);
-        Resources res = context.getResources();
+        Locale.setDefault(locale); Resources res = context.getResources();
         Configuration config = new Configuration(res.getConfiguration());
-        if (Build.VERSION.SDK_INT >= 17) {
-            config.setLocale(locale);
-            context = context.createConfigurationContext(config);
+        //if (Build.VERSION.SDK_INT >= 17)
+        if (Build.VERSION.SDK_INT > 24) {
+            config.setLocale(locale); context = context.createConfigurationContext(config);
         } else {
             config.locale = locale;
             res.updateConfiguration(config, res.getDisplayMetrics());
-        }
-        return context;
+        } return context;
     }
+
     /**
      * get current locale
      */

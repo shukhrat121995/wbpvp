@@ -6,7 +6,7 @@
     android:id="@+id/offline_feedback_container"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.gallery.GalleryFragment">
+    tools:context=".ui.feedback_offline.SavedFeedbackFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/offline_blog_list"

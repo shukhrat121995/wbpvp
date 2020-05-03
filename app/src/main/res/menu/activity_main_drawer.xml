@@ -6,17 +6,17 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/feedback_icon"
+            android:id="@+id/nav_main"
+            android:icon="@drawable/action_home"
             android:title="@string/menu_home" />
         <item
             android:id="@+id/nav_feedback"
             android:icon="@drawable/feedback_icon"
             android:title="@string/menu_feedback" />
-        <item
+        <!--<item
             android:id="@+id/nav_dashboard"
             android:icon="@drawable/dashboard_icon"
-            android:title="@string/menu_dashboard" />
+            android:title="@string/menu_dashboard" />-->
         <item
             android:id="@+id/nav_admin"
             android:icon="@mipmap/baseline_account_circle_white_48"
