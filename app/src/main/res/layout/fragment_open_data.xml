@@ -5,10 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".ui.opendata.OpenDataFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <FrameLayout
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="THIS IS A OPEN DATA FRAGMENT" />
+        />
 
 </FrameLayout>

@@ -56,5 +56,7 @@
         android:name="com.shukhrat.wbpvp.ui.feedback_online.FeedbackFragment"/>
     <fragment android:id="@+id/logout"
         android:name="com.shukhrat.wbpvp.ui.feedback_online.FeedbackFragment"/>
+    <fragment android:id="@+id/design_bottom_sheet"
+        android:name="com.shukhrat.wbpvp.ui.sliding_panel.BottomSheetFragment"/>
 
 </navigation>
