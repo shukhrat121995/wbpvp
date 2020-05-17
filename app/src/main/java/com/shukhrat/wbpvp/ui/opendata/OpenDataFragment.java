@@ -130,6 +130,9 @@ public class OpenDataFragment extends Fragment implements OnMapReadyCallback {
         pie.data(data);
 
         pie.title("Total Population: 12666");
+        pie.title().fontColor("#858585");
+        pie.title().fontSize(14);
+        pie.title().fontWeight("bold");
         pie.background().fill("#f2f3f5");
         pie.background().cornerType("round");
         pie.background().corners(10);
@@ -168,7 +171,9 @@ public class OpenDataFragment extends Fragment implements OnMapReadyCallback {
 
         cartesian.animation(true);
         cartesian.title("Total projects investment: $515770");
-
+        cartesian.title().fontColor("#858585");
+        cartesian.title().fontSize(14);
+        cartesian.title().fontWeight("bold");
         cartesian.background().fill("#f2f3f5");
         cartesian.background().cornerType("round");
         cartesian.background().corners(10);

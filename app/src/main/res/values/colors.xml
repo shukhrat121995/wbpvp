@@ -5,6 +5,7 @@
     <color name="colorAccent">#3c0150</color>
 
     <color name="colorInputStroke">#C2C2C2</color>
+    <color name="colorTextGray">#858585</color>
     <color name="alertDialogSuccess">#03C634</color>
     <color name="alertDialogDelete">#CF0303</color>
 </resources>

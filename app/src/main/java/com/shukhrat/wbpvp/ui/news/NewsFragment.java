@@ -1,65 +1,182 @@
 package com.shukhrat.wbpvp.ui.news;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.shukhrat.wbpvp.Blog;
+import com.shukhrat.wbpvp.PostActivity;
 import com.shukhrat.wbpvp.R;
+import com.shukhrat.wbpvp.authentification.EnterPhoneNumber;
+import com.shukhrat.wbpvp.ui.feedback_online.FeedbackFragment;
+import com.shukhrat.wbpvp.user.UserExpandInfo;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link NewsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class NewsFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private RecyclerView mBlogList;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private DatabaseReference mDatabase;
+
+    private LinearLayoutManager mLayoutManager;
+
+    private static int scrollY = -1;
 
     public NewsFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment NewsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static NewsFragment newInstance(String param1, String param2) {
-        NewsFragment fragment = new NewsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        //homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
+        final View root = inflater.inflate(R.layout.fragment_news, container, false);
+
+
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Feedback");
+        mDatabase.keepSynced(true);
+
+        mLayoutManager = new LinearLayoutManager(getContext());
+        mLayoutManager.setReverseLayout(true);
+        mLayoutManager.setStackFromEnd(true);
+
+        mBlogList = root.findViewById(R.id.blog_list_news);
+        mBlogList.setHasFixedSize(true);
+        mBlogList.setItemViewCacheSize(20);
+        mBlogList.setLayoutManager(mLayoutManager);
+
+
+        return root;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public void onStart() {
+        super.onStart();
+
+        Query db = mDatabase.orderByChild("status_anonymous").equalTo("true_false");
+
+        FirebaseRecyclerOptions<Blog> options =
+                new FirebaseRecyclerOptions.Builder<Blog>()
+                        .setQuery(db, Blog.class)
+                        .build();
+
+        FirebaseRecyclerAdapter adapter = new FirebaseRecyclerAdapter<Blog, NewsFragment.BlogViewHolder>(options) {
+            @Override
+            public NewsFragment.BlogViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.blog_row, parent, false);
+
+                return new NewsFragment.BlogViewHolder(view);
+            }
+
+            @Override
+            protected void onBindViewHolder(NewsFragment.BlogViewHolder holder, final int position, final Blog model) {
+                // Bind the image_details object to the BlogViewHolder
+                // ...
+
+                holder.setFeedback_title(model.getFeedback_title());
+                holder.setFeedback_description(model.getFeedback_description());
+                holder.setImage(model.getImage());
+                holder.setLocation(model.getLocation());
+                holder.setDate(model.getDate());
+
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        scrollY = position;
+                        //Toast.makeText(getContext(), "test", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getActivity(), UserExpandInfo.class);
+                        Bundle b = new Bundle();
+                        b.putString("title", model.getFeedback_title());
+                        b.putString("description", model.getFeedback_description());
+                        b.putString("image", model.getImage());
+                        b.putString("location", model.getLocation());
+                        b.putString("date", model.getDate());
+                        b.putString("admin_reply", model.getAdmin_reply());
+                        b.putString("admin_reply_date",model.getAdmin_reply_date());
+                        intent.putExtras(b);
+                        startActivity(intent);
+
+                    }
+                });
+            }
+        };
+
+        if(scrollY != -1)
+            mBlogList.smoothScrollToPosition(scrollY);
+        adapter.startListening();
+        mBlogList.setAdapter(adapter);
+    }
+
+    public static class BlogViewHolder extends RecyclerView.ViewHolder{
+
+        View mView;
+
+
+        public BlogViewHolder(@NonNull View itemView) {
+            super(itemView);
+            mView = itemView;
         }
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_news, container, false);
+        public void setFeedback_title(String title){
+            TextView post_title =  (TextView) mView.findViewById(R.id.post_title);
+            post_title.setText(title);
+        }
+
+        public void setFeedback_description(String desc){
+            TextView post_description =  (TextView) mView.findViewById(R.id.post_description);
+            post_description.setText(desc);
+        }
+
+        public void setImage(final String image){
+            final ImageView postImage = (ImageView) mView.findViewById(R.id.post_image);
+            Picasso.get()
+                    .load(image)
+                    .networkPolicy(NetworkPolicy.OFFLINE)
+                    .fit()
+                    .centerCrop()
+                    .into(postImage, new Callback() {
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            Picasso.get()
+                                    .load(image)
+                                    .fit()
+                                    .centerCrop()
+                                    .into(postImage);
+                        }
+                    });
+        }
+
+        public void setLocation(String location){
+            TextView post_location =  (TextView) mView.findViewById(R.id.post_location);
+            post_location.setText(location);
+        }
+
+        public void setDate(String date){
+            TextView post_date =  (TextView) mView.findViewById(R.id.post_date);
+            post_date.setText(date);
+        }
     }
 }
