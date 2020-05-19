@@ -23,6 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COL7 = "status";
     private static final String COL8 = "anonymous";
     private static final String COL9 = "status_anonymous";
+    private static final String COL10 = "gender";
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, TABLE_NAME, null, 1);
@@ -39,7 +40,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COL6 + " TEXT, "
                 + COL7 + " BOOLEAN, "
                 + COL8 + " BOOLEAN, "
-                + COL9 + " TEXT);";
+                + COL9 + " TEXT,"
+                + COL10 + " TEXT);";
         db.execSQL(createTable);
     }
 
@@ -49,7 +51,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean addData(String title, String description, String image, String timeStamp, String location, String date, Boolean status, Boolean anonymous, String status_anonymous){
+    public boolean addData(String title, String description, String image, String timeStamp, String location, String date, Boolean status, Boolean anonymous, String status_anonymous, String gender){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL1, title);
@@ -61,6 +63,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COL7, status);
         contentValues.put(COL8, anonymous);
         contentValues.put(COL9, status_anonymous);
+        contentValues.put(COL10, gender);
 
 
         long result = db.insert(TABLE_NAME, null, contentValues);

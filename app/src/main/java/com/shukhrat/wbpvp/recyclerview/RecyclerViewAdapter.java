@@ -68,7 +68,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         final File imgFile = new  File(images.get(position));
         //Upload image
         if(imgFile.exists()) {
-            Picasso.get()
+            final Picasso picasso = Picasso.get();
+            picasso.setIndicatorsEnabled(false);
+            picasso
                     .load(imgFile)
                     .networkPolicy(NetworkPolicy.OFFLINE)
                     .fit()
@@ -81,7 +83,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                         @Override
                         public void onError(Exception e) {
-                            Picasso.get()
+                            picasso
                                     .load(imgFile)
                                     .fit()
                                     .centerCrop()

@@ -165,7 +165,9 @@ public class FeedbackFragment extends Fragment {
 
         public void setImage(final String image){
             final ImageView postImage = (ImageView) mView.findViewById(R.id.post_image);
-            Picasso.get()
+            final Picasso picasso = Picasso.get();
+            picasso.setIndicatorsEnabled(false);
+            picasso
                     .load(image)
                     .networkPolicy(NetworkPolicy.OFFLINE)
                     .fit()
@@ -178,7 +180,7 @@ public class FeedbackFragment extends Fragment {
 
                         @Override
                         public void onError(Exception e) {
-                            Picasso.get()
+                            picasso
                                     .load(image)
                                     .fit()
                                     .centerCrop()

@@ -63,7 +63,9 @@ public class UserExpandInfo extends BaseActivity {
 
     public void CreateView(){
         //imageView
-        Picasso.get()
+        final Picasso picasso = Picasso.get();
+        picasso.setIndicatorsEnabled(false);
+        picasso
                 .load(user_image)
                 .networkPolicy(NetworkPolicy.OFFLINE)
                 .fit()
@@ -76,7 +78,7 @@ public class UserExpandInfo extends BaseActivity {
 
                     @Override
                     public void onError(Exception e) {
-                        Picasso.get()
+                        picasso
                                 .load(user_image)
                                 .fit()
                                 .centerCrop()

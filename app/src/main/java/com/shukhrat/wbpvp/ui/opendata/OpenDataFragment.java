@@ -1,13 +1,18 @@
 package com.shukhrat.wbpvp.ui.opendata;
 
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +24,6 @@ import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.anychart.charts.Cartesian;
 import com.anychart.charts.Pie;
 import com.anychart.core.cartesian.series.Column;
-import com.anychart.core.lineargauge.pointers.Bar;
 import com.anychart.enums.Anchor;
 import com.anychart.enums.HoverMode;
 import com.anychart.enums.Position;
@@ -46,6 +50,8 @@ public class OpenDataFragment extends Fragment implements OnMapReadyCallback {
 
     private SupportMapFragment mapFragment;
     private GoogleMap mMap;
+
+    private BottomSheetDialog dialog;
 
     public OpenDataFragment() {
         // Required empty public constructor
@@ -100,9 +106,8 @@ public class OpenDataFragment extends Fragment implements OnMapReadyCallback {
 
         final View view = getLayoutInflater().inflate(R.layout.fragment_bottom_sheet_dialog, null);
 
-        final BottomSheetDialog dialog = new BottomSheetDialog(getContext());
-
-
+        dialog = new BottomSheetDialog(getContext());
+        dialog.setContentView(view);
 
 
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
@@ -110,9 +115,8 @@ public class OpenDataFragment extends Fragment implements OnMapReadyCallback {
             public void onInfoWindowClick(Marker marker) {
 
                 loadChartTotalPopulation(view);
-                loadChartProjects(view);
+                projectsTableView(view);
 
-                dialog.setContentView(view);
                 dialog.show();
             }
         });
@@ -143,11 +147,13 @@ public class OpenDataFragment extends Fragment implements OnMapReadyCallback {
         anyChartView.setChart(pie);
     }
 
-    private void loadChartProjects(View view){
+    /*private void loadChartProjects(View view){
         AnyChartView anyChartView = view.findViewById(R.id.any_chart_projects);
         APIlib.getInstance().setActiveAnyChartView(anyChartView);
 
         Cartesian cartesian = AnyChart.column();
+
+
 
         List<DataEntry> data = new ArrayList<>();
         data.add(new ValueDataEntry("School", 80540));
@@ -192,7 +198,81 @@ public class OpenDataFragment extends Fragment implements OnMapReadyCallback {
         //cartesian.yAxis(0).title("Revenue");
 
         anyChartView.setChart(cartesian);
+    }*/
+
+    private void projectsTableView(View view){
+        final TableLayout prices = (TableLayout)view.findViewById(R.id.table_projects);
+
+        prices.setStretchAllColumns(true);
+        prices.bringToFront();
+
+        ArrayList<String> project_year = new ArrayList<>();
+        project_year.add("Year");
+        project_year.add("2020");
+        project_year.add("2020");
+        project_year.add("2021");
+        project_year.add("2022");
+        project_year.add("2022");
+
+        ArrayList<String> project_name = new ArrayList<>();
+        project_name.add("Name");
+        project_name.add("School");
+        project_name.add("Kindergarten");
+        project_name.add("Road");
+        project_name.add("Bridge");
+        project_name.add("Hospital");
+
+        ArrayList<String> total_investment = new ArrayList<>();
+        total_investment.add("Total investment");
+        total_investment.add("$80540");
+        total_investment.add("$94190");
+        total_investment.add("$102610");
+        total_investment.add("$110430");
+        total_investment.add("$128000");
+
+        for(int i = 0; i < 6; i++){
+            TableRow tr =  new TableRow(getContext());
+            TextView c1 = new TextView(getContext());
+            c1.setTextSize(14);
+            c1.setTextColor(Color.BLACK);
+            c1.setGravity(Gravity.CENTER);
+            c1.setPadding(5,5,5,5);
+            c1.setBackground(getResources().getDrawable(R.drawable.table_layout_border));
+            c1.setText(project_name.get(i));
+            TextView c2 = new TextView(getContext());
+            c2.setTextSize(14);
+            c2.setTextColor(Color.BLACK);
+            c2.setGravity(Gravity.CENTER);
+            c2.setPadding(5,5,5,5);
+            c2.setBackground(getResources().getDrawable(R.drawable.table_layout_border));
+            c2.setText(project_year.get(i));
+            TextView c3 = new TextView(getContext());
+            c3.setTextSize(14);
+            c3.setTextColor(Color.BLACK);
+            c3.setGravity(Gravity.CENTER);
+            c3.setPadding(5,5,5,5);
+            c3.setBackground(getResources().getDrawable(R.drawable.table_layout_border));
+            c3.setText(total_investment.get(i));
+            tr.addView(c1);
+            tr.addView(c2);
+            tr.addView(c3);
+
+            if(i == 0){
+                c1.setTextColor(Color.WHITE);
+                c1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                c2.setTextColor(Color.WHITE);
+                c2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                c3.setTextColor(Color.WHITE);
+                c3.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            }
+            prices.addView(tr);
+        }
+
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                prices.removeAllViews();
+            }
+        });
     }
-
-
 }

@@ -79,15 +79,17 @@ public class PostActivity extends BaseActivity {
     private EditText feedback_title, feedback_description;
     private Button sumit_feedback;
 
-    Spinner spinner_region, spinner_district, spinner_village;
+    Spinner spinner_region, spinner_district, spinner_village, spinner_gender;
 
     ArrayAdapter<String> arrayAdapter_Regions;
     ArrayAdapter<String> arrayAdapter_Districts;
     ArrayAdapter<String> arrayAdapter_Vilalges;
+    ArrayAdapter<String> arrayAdapter_Gender;
 
     ArrayList<String> arrayList_Regions;
     ArrayList<String> arrayList_Districts;
     ArrayList<String> arrayList_Villages;
+    ArrayList<String> arrayList_Gender;
 
     private Uri imageUri = null;
     Bitmap bitmap = null;
@@ -98,6 +100,8 @@ public class PostActivity extends BaseActivity {
     private ProgressDialog progressDialog;
 
     private String reg, dis, vil = null;
+
+    private String gender = null;
 
     private String absolute_path = null;
 
@@ -129,6 +133,7 @@ public class PostActivity extends BaseActivity {
         spinner_region = (Spinner)findViewById(R.id.spinner_region);
         spinner_district = (Spinner)findViewById(R.id.spinner_district);
         spinner_village = (Spinner)findViewById(R.id.spinner_village);
+        spinner_gender = (Spinner)findViewById(R.id.spinner_gender);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
@@ -210,14 +215,6 @@ public class PostActivity extends BaseActivity {
         //* * * Spinner Regions end * * *
 
         //* * * Spinner Districts start * * *
-
-
-
-
-
-
-
-
         spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -234,11 +231,9 @@ public class PostActivity extends BaseActivity {
 
             }
         });
-
         //* * * Spinner District ends * * *
 
         //* * * Spinner Villages start * * *
-
         arrayList_Villages = new ArrayList<>();
         arrayList_Villages.add(0,getString(R.string.select_village));
         arrayList_Villages.add(getString(R.string.sokhil_mfy));
@@ -263,8 +258,33 @@ public class PostActivity extends BaseActivity {
 
             }
         });
-
         //* * * Spinner Villages end * * *
+
+        //* * * Spinner Gender start * * *
+        arrayList_Gender = new ArrayList<>();
+        arrayList_Gender.add(0, "Gender");
+        arrayList_Gender.add("Male");
+        arrayList_Gender.add("Female");
+
+        arrayAdapter_Gender = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, arrayList_Gender);
+        spinner_gender.setAdapter(arrayAdapter_Gender);
+
+        spinner_gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position == 0){
+                }
+                else {
+                    Toast.makeText(PostActivity.this, arrayList_Gender.get(position), Toast.LENGTH_SHORT).show();
+                    gender = arrayList_Gender.get(position);
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        //* * * Spinner Gender end * * *
 
 
        imageButton.setOnClickListener(new View.OnClickListener() {
@@ -293,7 +313,7 @@ public class PostActivity extends BaseActivity {
                    final String title_val = feedback_title.getText().toString().trim();
                    final String description_val = feedback_description.getText().toString().trim();
                    if (!TextUtils.isEmpty(title_val)&& !TextUtils.isEmpty(description_val)&&imageUri != null && absolute_path != null){
-                       PostOfflineData(title_val, description_val, absolute_path, String.valueOf(new Date().getTime()), reg+"/"+dis+"/"+vil, day+"/"+monthString+"/"+year, false, anonymous.isChecked(), false+"_"+anonymous.isChecked());
+                       PostOfflineData(title_val, description_val, absolute_path, String.valueOf(new Date().getTime()), reg+"/"+dis+"/"+vil, day+"/"+monthString+"/"+year, false, anonymous.isChecked(), false+"_"+anonymous.isChecked(), gender);
                    }
                    else{
                        //Toast.makeText(PostActivity.this, "Please fill all fields", Toast.LENGTH_LONG).show();
@@ -317,19 +337,23 @@ public class PostActivity extends BaseActivity {
             {
                 File sdCard = Environment.getExternalStorageDirectory();
                 File dir = new File(sdCard.getAbsolutePath() + "/wbpvp");
-                dir.mkdirs();
-                File file = new File(dir, "wbpvp_"+new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+ ".JPEG");
-                save_path =   file;
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 50,baos);
-                FileOutputStream f = null;
-                f = new FileOutputStream(file);
-                MediaScannerConnection.scanFile(this, new String[]{file.getAbsolutePath()}, null, null);
-                if (f != null)
+                boolean folder = dir.mkdirs();
+                if(folder) {
+                    File file = new File(dir, "wbpvp_" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime()) + ".JPEG");
+                    save_path = file;
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+                    FileOutputStream f = null;
+                    f = new FileOutputStream(file);
+                    MediaScannerConnection.scanFile(this, new String[]{file.getAbsolutePath()}, null, null);
+                    if (f != null) {
+                        f.write(baos.toByteArray());
+                        f.flush();
+                        f.close();
+                    }
+                } else
                 {
-                    f.write(baos.toByteArray());
-                    f.flush();
-                    f.close();
+                    Toast.makeText(PostActivity.this, "folder not created", Toast.LENGTH_LONG).show();
                 }
             }
             catch (Exception e)
@@ -340,8 +364,8 @@ public class PostActivity extends BaseActivity {
         return String.valueOf(save_path);
     }
 
-    public void PostOfflineData(String title, String description, String image, String timeStamp, String location, String date, Boolean status, Boolean anonymous, String status_anonymous){
-        boolean insertData = mDatabaseHelper.addData(title, description, image, timeStamp, location, date, status, anonymous, status_anonymous);
+    public void PostOfflineData(String title, String description, String image, String timeStamp, String location, String date, Boolean status, Boolean anonymous, String status_anonymous, String gender){
+        boolean insertData = mDatabaseHelper.addData(title, description, image, timeStamp, location, date, status, anonymous, status_anonymous, gender);
 
         if(insertData){
             new SweetAlertDialog(PostActivity.this, SweetAlertDialog.SUCCESS_TYPE)
@@ -412,6 +436,7 @@ public class PostActivity extends BaseActivity {
                                     newPost.child("location").setValue(reg+"/"+dis+"/"+vil);
                                     newPost.child("date").setValue(day+"/"+monthString+"/"+year);
                                     newPost.child("status").setValue(false);
+                                    newPost.child("gender").setValue(gender);
                                     newPost.child("anonymous").setValue(anonymous.isChecked());
                                     newPost.child("status_anonymous").setValue(false+"_"+anonymous.isChecked());
                                     newPost.child("admin").setValue("new");

@@ -51,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:id="@+id/post_title"
                 android:ellipsize="end"
                 android:maxLines="1"

@@ -97,7 +97,9 @@ public class AdminEdit extends BaseActivity {
 
     public void CreateView(){
         //imageView
-        Picasso.get()
+        final Picasso picasso = Picasso.get();
+        picasso.setIndicatorsEnabled(false);
+        picasso
                 .load(image)
                 .networkPolicy(NetworkPolicy.OFFLINE)
                 .fit()
@@ -110,7 +112,7 @@ public class AdminEdit extends BaseActivity {
 
                     @Override
                     public void onError(Exception e) {
-                        Picasso.get()
+                        picasso
                                 .load(image)
                                 .fit()
                                 .centerCrop()

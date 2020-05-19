@@ -69,7 +69,7 @@
                      android:layout_weight="10"
                      android:layout_gravity="bottom|center"
                      android:tint="@color/colorPrimary"
-                     android:src="@drawable/action_people"
+                     android:src="@drawable/baseline_group_black_48"
                      android:layout_height="30dp"/>
                  <View android:layout_width="0dp"
                      android:layout_gravity="bottom"
@@ -92,10 +92,26 @@
                  android:textStyle="bold"
                  android:layout_height="wrap_content"/>
          </LinearLayout>
-         <com.anychart.AnyChartView
-             android:layout_margin="5dp"
-             android:id="@+id/any_chart_projects"
+
+         <LinearLayout
              android:layout_width="match_parent"
-             android:layout_height="300dp"/>
+             android:background="@drawable/table_border"
+             android:orientation="vertical"
+             android:layout_margin="5dp"
+             android:layout_height="wrap_content">
+             <TextView
+                 android:gravity="center"
+                 android:layout_margin="5dp"
+                 android:layout_width="match_parent"
+                 android:text="Total Projects investment: $515770"
+                 android:layout_height="wrap_content"
+                 android:textSize="14sp"
+                 android:textStyle="bold"/>
+             <TableLayout
+                 android:layout_width="match_parent"
+                 android:layout_margin="5dp"
+                 android:id="@+id/table_projects"
+                 android:layout_height="wrap_content"/>
+         </LinearLayout>
      </LinearLayout>
 </ScrollView>

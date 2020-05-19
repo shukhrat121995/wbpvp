@@ -25,6 +25,7 @@ import com.shukhrat.wbpvp.Blog;
 import com.shukhrat.wbpvp.PostActivity;
 import com.shukhrat.wbpvp.R;
 import com.shukhrat.wbpvp.authentification.EnterPhoneNumber;
+import com.shukhrat.wbpvp.language.LocaleManager;
 import com.shukhrat.wbpvp.ui.feedback_online.FeedbackFragment;
 import com.shukhrat.wbpvp.user.UserExpandInfo;
 import com.squareup.picasso.Callback;
@@ -50,7 +51,7 @@ public class NewsFragment extends Fragment {
         final View root = inflater.inflate(R.layout.fragment_news, container, false);
 
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Feedback");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("News").child(new LocaleManager().getLanguagePref(getContext()));
         mDatabase.keepSynced(true);
 
         mLayoutManager = new LinearLayoutManager(getContext());
@@ -70,47 +71,40 @@ public class NewsFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        Query db = mDatabase.orderByChild("status_anonymous").equalTo("true_false");
-
-        FirebaseRecyclerOptions<Blog> options =
-                new FirebaseRecyclerOptions.Builder<Blog>()
-                        .setQuery(db, Blog.class)
+        FirebaseRecyclerOptions<NewsModel> options =
+                new FirebaseRecyclerOptions.Builder<NewsModel>()
+                        .setQuery(mDatabase, NewsModel.class)
                         .build();
 
-        FirebaseRecyclerAdapter adapter = new FirebaseRecyclerAdapter<Blog, NewsFragment.BlogViewHolder>(options) {
+        FirebaseRecyclerAdapter adapter = new FirebaseRecyclerAdapter<NewsModel, NewsFragment.BlogViewHolder>(options) {
             @Override
             public NewsFragment.BlogViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.blog_row, parent, false);
+                        .inflate(R.layout.blog_news, parent, false);
 
                 return new NewsFragment.BlogViewHolder(view);
             }
 
             @Override
-            protected void onBindViewHolder(NewsFragment.BlogViewHolder holder, final int position, final Blog model) {
+            protected void onBindViewHolder(NewsFragment.BlogViewHolder holder, final int position, final NewsModel model) {
                 // Bind the image_details object to the BlogViewHolder
                 // ...
 
-                holder.setFeedback_title(model.getFeedback_title());
-                holder.setFeedback_description(model.getFeedback_description());
-                holder.setImage(model.getImage());
-                holder.setLocation(model.getLocation());
-                holder.setDate(model.getDate());
+                holder.setFeedback_title(model.getNews_title());
+                holder.setImage(model.getNews_image());
+                holder.setDate(model.getNews_date());
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         scrollY = position;
-                        //Toast.makeText(getContext(), "test", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(getActivity(), UserExpandInfo.class);
+                        Intent intent = new Intent(getActivity(), NewsExpandInfo.class);
                         Bundle b = new Bundle();
-                        b.putString("title", model.getFeedback_title());
-                        b.putString("description", model.getFeedback_description());
-                        b.putString("image", model.getImage());
-                        b.putString("location", model.getLocation());
-                        b.putString("date", model.getDate());
-                        b.putString("admin_reply", model.getAdmin_reply());
-                        b.putString("admin_reply_date",model.getAdmin_reply_date());
+                        b.putString("title", model.getNews_title());
+                        b.putString("description", model.getNews_description());
+                        b.putString("text", model.getNews_text());
+                        b.putString("image", model.getNews_image());
+                        b.putString("date", model.getNews_date());
                         intent.putExtras(b);
                         startActivity(intent);
 
@@ -136,47 +130,40 @@ public class NewsFragment extends Fragment {
         }
 
         public void setFeedback_title(String title){
-            TextView post_title =  (TextView) mView.findViewById(R.id.post_title);
-            post_title.setText(title);
-        }
-
-        public void setFeedback_description(String desc){
-            TextView post_description =  (TextView) mView.findViewById(R.id.post_description);
-            post_description.setText(desc);
+            TextView news_title =  (TextView) mView.findViewById(R.id.news_title);
+            news_title.setText(title);
         }
 
         public void setImage(final String image){
-            final ImageView postImage = (ImageView) mView.findViewById(R.id.post_image);
-            Picasso.get()
-                    .load(image)
+            final ImageView postImage = (ImageView) mView.findViewById(R.id.news_image);
+            final String url = "http://obodqishloq.geekart.club/wb/images/news_images/" + image;
+
+            final Picasso picasso = Picasso.get();
+            picasso.setIndicatorsEnabled(false);
+            picasso
+                    .load(url)
                     .networkPolicy(NetworkPolicy.OFFLINE)
                     .fit()
-                    .centerCrop()
+                    .centerInside()
                     .into(postImage, new Callback() {
                         @Override
                         public void onSuccess() {
 
                         }
-
                         @Override
                         public void onError(Exception e) {
-                            Picasso.get()
-                                    .load(image)
+                            picasso
+                                    .load(url)
                                     .fit()
-                                    .centerCrop()
+                                    .centerInside()
                                     .into(postImage);
                         }
                     });
         }
 
-        public void setLocation(String location){
-            TextView post_location =  (TextView) mView.findViewById(R.id.post_location);
-            post_location.setText(location);
-        }
-
         public void setDate(String date){
-            TextView post_date =  (TextView) mView.findViewById(R.id.post_date);
-            post_date.setText(date);
+            TextView news_date =  (TextView) mView.findViewById(R.id.news_date);
+            news_date.setText(date);
         }
     }
 }

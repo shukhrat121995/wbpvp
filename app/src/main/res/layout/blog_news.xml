@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/blog_news_id"
+    android:background=" #ffffff"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:layout_margin="20dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:padding="1dp"
+        android:background="@drawable/input_outline"
+        android:layout_height="100dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="100"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="70"
+                android:orientation="vertical"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:textSize="16sp"
+                    android:padding="10dp"
+                    android:gravity="center|start"
+                    android:id="@+id/news_title"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="This is a news title, which will be shown in news section"
+                    android:textStyle="bold"
+                    android:layout_height="60dp"/>
+                <TextView
+                    android:id="@+id/news_date"
+                    android:padding="10dp"
+                    android:textSize="12sp"
+                    android:textColor="#32104A"
+                    android:gravity="start|center"
+                    android:textStyle="bold"
+                    android:text="11/03/2020"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"/>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="30"
+                android:gravity="center|end"
+                android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/news_image"
+                android:layout_marginRight="10dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/logo" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

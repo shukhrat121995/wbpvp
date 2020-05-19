@@ -95,6 +95,21 @@
                 android:layout_height="match_parent"/>
         </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:id="@+id/layout_gender"
+            android:background="@drawable/input_outline"
+            android:layout_below="@id/layout_village"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:layout_height="50dp">
+            <Spinner
+                android:layout_width="match_parent"
+                android:id="@+id/spinner_gender"
+                android:spinnerMode="dropdown"
+                android:layout_height="match_parent"/>
+        </RelativeLayout>
+
         <Switch
             android:id="@+id/switch_anonymous"
             android:showText="true"
@@ -103,7 +118,7 @@
             android:textOff=""
             android:textOn=""
             android:layout_margin="10dp"
-            android:layout_below="@id/layout_village"
+            android:layout_below="@id/layout_gender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/anonymous_feedback" />

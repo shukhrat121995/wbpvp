@@ -60,6 +60,7 @@ public class SavedFeedbackFragment extends Fragment implements RecyclerViewAdapt
     private ArrayList<String> locations = new ArrayList<>();
     private ArrayList<Boolean> status_states = new ArrayList<>();
     private ArrayList<Boolean> anonymous_states = new ArrayList<>();
+    private ArrayList<String> gender = new ArrayList<>();
 
     RecyclerView recyclerView;
 
@@ -103,6 +104,7 @@ public class SavedFeedbackFragment extends Fragment implements RecyclerViewAdapt
             dates.add(data.getString(6));
             status_states.add(Boolean.valueOf(data.getString(7)));
             anonymous_states.add(Boolean.valueOf(data.getString(8)));
+            gender.add(data.getString(10));
 
         }
     }
@@ -127,45 +129,6 @@ public class SavedFeedbackFragment extends Fragment implements RecyclerViewAdapt
     }
 
     public void AlertDialog(final int position){
-        /*builder.setMessage("What do you want to do with this feedback?")
-                .setCancelable(true)
-                .setPositiveButton("Upload", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        //finish();
-                        if(isNetworkConnected()) {
-                            StartPosting(position);
-                        }
-                    }
-                })
-                .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        //  Action for 'NO' Button
-                        //Toast.makeText(itemView.getContext(), images.get(getAdapterPosition()), Toast.LENGTH_LONG).show();
-
-                        Cursor data = mDatabaseHelper.getItemID(images.get(position));
-                        int itemID = -1;
-                        while (data.moveToNext()){
-                            itemID = data.getInt(0);
-                        }
-
-                        if(itemID>-1){
-                            mDatabaseHelper.DeleteRow(itemID);
-                            RemoveFromArrayLists();
-                            InitializeArrayLists();
-                            adapter.notifyItemRemoved(position);
-                        }
-                        else{
-                            Toast.makeText(getContext(), "No id associated with that feedback", Toast.LENGTH_LONG).show();
-                        }
-
-                        //dialog.cancel();
-                    }
-                });
-        //Creating dialog box
-        AlertDialog alert = builder.create();
-        //Setting the title manually
-        alert.setTitle("Choose action!");
-        alert.show();*/
 
         SweetAlertDialog alertDialog = new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE);
         alertDialog
@@ -223,6 +186,7 @@ public class SavedFeedbackFragment extends Fragment implements RecyclerViewAdapt
         dates.clear();
         status_states.clear();
         anonymous_states.clear();
+        gender.clear();
     }
 
     private void StartPosting(final int position){
@@ -261,7 +225,7 @@ public class SavedFeedbackFragment extends Fragment implements RecyclerViewAdapt
                                     newPost.child("anonymous").setValue(anonymous_states.get(position));
                                     newPost.child("admin").setValue("new");
                                     newPost.child("admin_reply").setValue("Empty");
-
+                                    newPost.child("gender").setValue(gender.get(position));
                                     newPost.child("status_anonymous").setValue(false+"_"+anonymous_states.get(position));
                                     progressDialog.dismiss();
 
