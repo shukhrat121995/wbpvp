@@ -88,5 +88,6 @@
     <string name="feedback">Отзывы</string>
     <string name="news">Новости</string>
     <string name="open_data">Данные</string>
+    <string name="app_lang">ru</string>
 
 </resources>

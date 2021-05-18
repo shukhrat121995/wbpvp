@@ -41,7 +41,18 @@ public class NewsFragment extends Fragment {
             @Override
             public void onLoadResource(WebView view, String url) {
                 super.onLoadResource(view, url);
-                view.loadUrl("javascript:var x = document.getElementsByClassName('header-area')[0].style.display='none';");
+                view.loadUrl("javascript: (function() { " +
+                        "document.getElementsByClassName('header-area')[0].style.display='none';" +
+                        "document.getElementsByClassName('breadcumb-area')[0].style.display='none';" +
+                        "document.getElementsByClassName('footer-area')[0].style.display='none';" +
+                        "document.getElementsByClassName('globalClass_191b')[0].style.display='none';" +
+                        "})()");
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                if (url.contains("jivosite.com")) return false;
+                return super.shouldOverrideUrlLoading(view, url);
             }
 
             @Override
@@ -50,7 +61,7 @@ public class NewsFragment extends Fragment {
                 super.onPageFinished(view, url);
             }
         });
-        webView.loadUrl("http://ridp.uz/en/news/");
+        webView.loadUrl("http://ridp.uz/" + getString(R.string.app_lang) + "/news/");
         webView.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -65,7 +76,7 @@ public class NewsFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                webView.loadUrl("http://ridp.uz/en/news/");
+                webView.loadUrl("http://ridp.uz/" + getString(R.string.app_lang) + "/news/");
             }
         });
 

@@ -1,18 +1,15 @@
 package com.shukhrat.wbpvp.ui.news;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.shukhrat.wbpvp.R;
 import com.squareup.picasso.Callback;
@@ -34,7 +31,7 @@ public class NewsExpandInfo extends AppCompatActivity {
         setContentView(R.layout.activity_news_expand_info);
 
         Bundle b = getIntent().getExtras();
-        if(b != null){
+        if (b != null) {
             news_title = b.getString("title");
             news_description = b.getString("description");
             news_text = b.getString("text");
@@ -48,7 +45,7 @@ public class NewsExpandInfo extends AppCompatActivity {
 
         setTitle(news_title);
 
-        imageView .setOnClickListener(new View.OnClickListener() {
+        imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 alertDialogNewsImageFullScreen();
@@ -56,22 +53,22 @@ public class NewsExpandInfo extends AppCompatActivity {
         });
     }
 
-    public void Initialization(){
+    public void Initialization() {
         //user property
-        title = (TextView)findViewById(R.id.news_expand_title);
-        description = (TextView)findViewById(R.id.news_expand_description);
-        text = (TextView)findViewById(R.id.news_expand_text);
-        date = (TextView)findViewById(R.id.news_expand_date);
-        imageView = (ImageView)findViewById(R.id.news_expand_imageView);
+        title = (TextView) findViewById(R.id.news_expand_title);
+        description = (TextView) findViewById(R.id.news_expand_description);
+        text = (TextView) findViewById(R.id.news_expand_text);
+        date = (TextView) findViewById(R.id.news_expand_date);
+        imageView = (ImageView) findViewById(R.id.news_expand_imageView);
 
     }
 
-    public void CreateView(){
+    public void CreateView() {
         //imageView
         final Picasso picasso = Picasso.get();
         picasso.setIndicatorsEnabled(false);
         picasso
-                .load(url+news_image)
+                .load(url + news_image)
                 .networkPolicy(NetworkPolicy.OFFLINE)
                 .fit()
                 .centerCrop()
@@ -84,7 +81,7 @@ public class NewsExpandInfo extends AppCompatActivity {
                     @Override
                     public void onError(Exception e) {
                         picasso
-                                .load(url+news_image)
+                                .load(url + news_image)
                                 .fit()
                                 .centerCrop()
                                 .into(imageView);
@@ -104,7 +101,7 @@ public class NewsExpandInfo extends AppCompatActivity {
         date.setText(news_date);
     }
 
-    private void alertDialogNewsImageFullScreen(){
+    private void alertDialogNewsImageFullScreen() {
 
         final AlertDialog.Builder alertadd = new AlertDialog.Builder(NewsExpandInfo.this);
         LayoutInflater factory = LayoutInflater.from(NewsExpandInfo.this);
@@ -115,7 +112,7 @@ public class NewsExpandInfo extends AppCompatActivity {
         final Picasso picasso = Picasso.get();
         picasso.setIndicatorsEnabled(false);
         picasso
-                .load(url+news_image)
+                .load(url + news_image)
                 .networkPolicy(NetworkPolicy.OFFLINE)
                 .into(imageViewDialog, new Callback() {
                     @Override
@@ -126,7 +123,7 @@ public class NewsExpandInfo extends AppCompatActivity {
                     @Override
                     public void onError(Exception e) {
                         picasso
-                                .load(url+news_image)
+                                .load(url + news_image)
                                 .into(imageViewDialog);
                     }
                 });
