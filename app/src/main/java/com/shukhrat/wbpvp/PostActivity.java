@@ -214,15 +214,30 @@ public class PostActivity extends BaseActivity {
         });
         //* * * Spinner Regions end * * *
 
+        arrayList_Villages = new ArrayList<>();
+        arrayList_Villages.add(0,getString(R.string.select_village));
         //* * * Spinner Districts start * * *
         spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position == 0){
+                    arrayList_Villages.clear();
+                    arrayList_Villages.add(0, getString(R.string.select_village));
                 }
                 else {
                     Toast.makeText(PostActivity.this, arrayList_Districts.get(position), Toast.LENGTH_SHORT).show();
                     dis = arrayList_Districts.get(position);
+
+                    if (dis.equals(getString(R.string.paxtaobod))){
+                        arrayList_Villages.clear();
+                        arrayList_Villages.add(0, getString(R.string.select_village));
+                        arrayList_Villages.add(getString(R.string.sokhil_mfy));
+                    }
+                    else if (dis.equals(getString(R.string.bakhmal))){
+                        arrayList_Villages.clear();
+                        arrayList_Villages.add(0, getString(R.string.select_village));
+                        arrayList_Villages.add(getString(R.string.sokhil_mfy));
+                    }
                 }
             }
 
@@ -234,8 +249,7 @@ public class PostActivity extends BaseActivity {
         //* * * Spinner District ends * * *
 
         //* * * Spinner Villages start * * *
-        arrayList_Villages = new ArrayList<>();
-        arrayList_Villages.add(0,getString(R.string.select_village));
+
         arrayList_Villages.add(getString(R.string.sokhil_mfy));
 
 

@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">pvp</string>
+    <string name="app_name">RIDP</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Проект благоустроенные села</string>
+    <string name="nav_header_title">Проект Развития Сельской Инфраструктуры</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_sign_out">Sign out</string>
@@ -62,6 +62,24 @@
     <string name="kushtepa">Куштепа</string>
     <string name="select_village">Выберите село…</string>
     <string name="sokhil_mfy">Сохил МФИ</string>
+
+    <string name="saroy_mfy">Сарой</string>
+    <string name="bakhmal_mfy">Бахмал</string>
+    <string name="madaniyat_mfy">Маданият</string>
+    <string name="uzunbuloq_mfy">Узунбулак</string>
+    <string name="oykor_mfy">Ойкор</string>
+    <string name="temirqadam_mfy">Темиркадам</string>
+    <string name="sangzor_mfy">Сангзор</string>
+    <string name="molguzar_mfy">Молгузар</string>
+    <string name="muzbuloq_mfy">Музбулак</string>
+
+    <string name="birlashgan_mfy">Бирлашган</string>
+
+    <string name="khojamushkent_mfy">Хужамушкент</string>
+
+    <string name="nurlikent_mfy">Нурликент</string>
+    <string name="gulshan_mfy">Гулшан</string>
+
     <string name="empty_fields">Пустые поля!</string>
     <string name="please_fill_all_fields">Пожалуйста, заполните все пустые поля!</string>
     <string name="success">Успешно!</string>

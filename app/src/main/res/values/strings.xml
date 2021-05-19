@@ -1,9 +1,9 @@
 <resources>
     <string name="app_lang">en</string>
-    <string name="app_name">pvp</string>
+    <string name="app_name">RIDP</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Prosperous Villages Project</string>
+    <string name="nav_header_title">Rural Infrastructure Development Project</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_sign_out">Sign out</string>
@@ -62,7 +62,25 @@
     <string name="yazyavan">Yazyavan</string>
     <string name="kushtepa">Kushtepa</string>
     <string name="select_village">Select Village…</string>
-    <string name="sokhil_mfy">Sokhil MFY</string>
+    <string name="sokhil_mfy">Sokhil</string>
+
+    <string name="saroy_mfy">Saroy</string>
+    <string name="bakhmal_mfy">Bakhmal</string>
+    <string name="madaniyat_mfy">Madaniyat</string>
+    <string name="uzunbuloq_mfy">Uzunbuloq</string>
+    <string name="oykor_mfy">Oykor</string>
+    <string name="temirqadam_mfy">Temirqadam</string>
+    <string name="sangzor_mfy">Sangzor</string>
+    <string name="molguzar_mfy">Molguzar</string>
+    <string name="muzbuloq_mfy">Muzbuloq</string>
+
+    <string name="birlashgan_mfy">Birlashgan</string>
+
+    <string name="khojamushkent_mfy">Khojamushkent</string>
+
+    <string name="nurlikent_mfy">Nurlikent</string>
+    <string name="gulshan_mfy">Gulshan</string>
+
     <string name="empty_fields">Empty fields!</string>
     <string name="please_fill_all_fields">Please fill all fields!</string>
     <string name="success">Success!</string>
