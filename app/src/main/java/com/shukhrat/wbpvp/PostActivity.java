@@ -236,7 +236,31 @@ public class PostActivity extends BaseActivity {
                     else if (dis.equals(getString(R.string.bakhmal))){
                         arrayList_Villages.clear();
                         arrayList_Villages.add(0, getString(R.string.select_village));
-                        arrayList_Villages.add(getString(R.string.sokhil_mfy));
+                        arrayList_Villages.add(getString(R.string.saroy_mfy));
+                        arrayList_Villages.add(getString(R.string.bakhmal_mfy));
+                        arrayList_Villages.add(getString(R.string.madaniyat_mfy));
+                        arrayList_Villages.add(getString(R.string.uzunbuloq_mfy));
+                        arrayList_Villages.add(getString(R.string.oykor_mfy));
+                        arrayList_Villages.add(getString(R.string.temirqadam_mfy));
+                        arrayList_Villages.add(getString(R.string.sangzor_mfy));
+                        arrayList_Villages.add(getString(R.string.molguzar_mfy));
+                        arrayList_Villages.add(getString(R.string.muzbuloq_mfy));
+                    }
+                    else if (dis.equals(getString(R.string.sardoba))){
+                        arrayList_Villages.clear();
+                        arrayList_Villages.add(0, getString(R.string.select_village));
+                        arrayList_Villages.add(getString(R.string.birlashgan_mfy));
+                    }
+                    else if (dis.equals(getString(R.string.yangiobod))){
+                        arrayList_Villages.clear();
+                        arrayList_Villages.add(0, getString(R.string.select_village));
+                        arrayList_Villages.add(getString(R.string.khojamushkent_mfy));
+                    }
+                    else if (dis.equals(getString(R.string.zomin))){
+                        arrayList_Villages.clear();
+                        arrayList_Villages.add(0, getString(R.string.select_village));
+                        arrayList_Villages.add(getString(R.string.nurlikent_mfy));
+                        arrayList_Villages.add(getString(R.string.gulshan_mfy));
                     }
                 }
             }
