@@ -8,6 +8,43 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:1068529393195:android:6c42089d7c88e10ac6146e",
+        "android_client_info": {
+          "package_name": "com.piu.ridp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1068529393195-vu2o5m6jrc8lu4mojm9rjm7gmsplbujh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.piu.ridp",
+            "certificate_hash": "e77a9cba667fcadd4a5f35c0b07755b6dc2346e7"
+          }
+        },
+        {
+          "client_id": "1068529393195-r61rtdv47i2kptdbj2q28ai619glqafd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANOo7VjzQYflvwExzUQTXHS0PEDD8bTcg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1068529393195-r61rtdv47i2kptdbj2q28ai619glqafd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:1068529393195:android:9d925e12e4f87862c6146e",
         "android_client_info": {
           "package_name": "com.shukhrat.wbpvp"
