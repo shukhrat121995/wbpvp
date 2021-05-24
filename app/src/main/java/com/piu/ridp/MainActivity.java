@@ -99,13 +99,13 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
                 if(destination.getId() == R.id.id_facebook){
-                    web_open("https://www.facebook.com/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82-%D0%91%D0%BB%D0%B0%D0%B3%D0%BE%D1%83%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BD%D0%BD%D1%8B%D0%B5-%D1%81%D0%B5%D0%BB%D0%B0-%D0%A3%D0%B7%D0%B1%D0%B5%D0%BA%D0%B8%D1%81%D1%82%D0%B0%D0%BD%D0%B0-%D0%BF%D1%80%D0%B8-%D0%9C%D0%AD%D0%9F-%D0%A0%D0%A3%D0%B7-727457484339084/");
+                    web_open("https://www.facebook.com/QIRL2020");
                 }else if (destination.getId() == R.id.id_telegram){
-                    web_open("https://t.me/obodqishloqchannel");
+                    web_open("https://t.me/uzb_ridp");
                 }else if (destination.getId() == R.id.nav_admin){
                     onCreateDialog();
                 }else if(destination.getId()==R.id.id_twitter){
-                    web_open("https://twitter.com/pvp24032020");
+                    web_open("https://twitter.com/");
                 }else if(destination.getId()==R.id.id_share){
                     ShareAppUrl();
                 }else if(destination.getId()==R.id.logout){
