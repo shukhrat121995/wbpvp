@@ -45,7 +45,7 @@
             android:hint="@string/feedback_description"
             android:layout_below="@+id/feedback_title"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="100dp"
             android:ems="10"
             android:gravity="start|top"
             android:inputType="textMultiLine" />

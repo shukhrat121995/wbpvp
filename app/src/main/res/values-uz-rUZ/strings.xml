@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">pvp</string>
+    <string name="app_name">RIDP</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Obod Qishloq dasturi</string>
+    <string name="nav_header_title">Qishloq Infratuzilmasini Rivojlantirish Loyihasi</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_sign_out">Chiqish</string>
@@ -17,7 +17,7 @@
     <string name="social">Ijtimoiy</string>
     <string name="additions">Qo\'shimchalar</string>
     <string name="share">Ulashish</string>
-    <string name="pvp_moderator">PVP moderator</string>
+    <string name="pvp_moderator">QIRL moderator</string>
     <string name="username">Login</string>
     <string name="password">Parol</string>
     <string name="enter_the_received_via_sms_code">SMS orqali olingan kodni kiriting</string>
@@ -62,6 +62,24 @@
     <string name="kushtepa">Kushtepa</string>
     <string name="select_village">Qishloq tanlang…</string>
     <string name="sokhil_mfy">Sokhil MFY</string>
+
+    <string name="saroy_mfy">Saroy MFY</string>
+    <string name="bakhmal_mfy">Baxmal MFY</string>
+    <string name="madaniyat_mfy">Madaniyat MFY</string>
+    <string name="uzunbuloq_mfy">Uzunbuloq MFY</string>
+    <string name="oykor_mfy">Oykor MFY</string>
+    <string name="temirqadam_mfy">Temirqadam MFY</string>
+    <string name="sangzor_mfy">Sangzor MFY</string>
+    <string name="molguzar_mfy">Molguzar MFY</string>
+    <string name="muzbuloq_mfy">Muzbuloq MFY</string>
+
+    <string name="birlashgan_mfy">Birlashgan MFY</string>
+
+    <string name="khojamushkent_mfy">Xo\'jamushkent MFY</string>
+
+    <string name="nurlikent_mfy">Nurlikent MFY</string>
+    <string name="gulshan_mfy">Gulshan QFY</string>
+
     <string name="empty_fields">Bo\'sh joylar!</string>
         <string name="please_fill_all_fields">Iltimos barcha maydonlarni to\'ldiring!</string>
     <string name="success">Muvaffaqiyat!</string>
@@ -86,4 +104,5 @@
     <string name="feedback">Izohlar</string>
     <string name="news">Yangiliklar</string>
     <string name="open_data">Ma\'lumotlar</string>
+    <string name="app_lang">uz</string>
 </resources>

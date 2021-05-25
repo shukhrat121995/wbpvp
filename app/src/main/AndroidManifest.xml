@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.shukhrat.wbpvp">
+    package="com.piu.ridp">
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -16,7 +16,7 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
-        android:name=".pvp"
+        android:name="com.piu.ridp.pvp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -39,27 +39,27 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".admin.AdminEdit"
-            android:parentActivityName=".admin.AdminActivity" />
+            android:name="com.piu.ridp.admin.AdminEdit"
+            android:parentActivityName="com.piu.ridp.admin.AdminActivity" />
         <activity
-            android:name=".PostActivity"
-            android:parentActivityName=".MainActivity" />
+            android:name="com.piu.ridp.PostActivity"
+            android:parentActivityName="com.piu.ridp.MainActivity" />
         <activity
-            android:name=".authentification.EnterPhoneNumber"
-            android:parentActivityName=".MainActivity" />
+            android:name="com.piu.ridp.authentification.EnterPhoneNumber"
+            android:parentActivityName="com.piu.ridp.MainActivity" />
         <activity
-            android:name=".authentification.VerifyPhoneActivity"
-            android:parentActivityName=".authentification.EnterPhoneNumber" />
+            android:name="com.piu.ridp.authentification.VerifyPhoneActivity"
+            android:parentActivityName="com.piu.ridp.authentification.EnterPhoneNumber" />
         <activity
-            android:name=".admin.AdminActivity"
-            android:parentActivityName=".MainActivity" />
+            android:name="com.piu.ridp.admin.AdminActivity"
+            android:parentActivityName="com.piu.ridp.MainActivity" />
         <activity
-            android:name=".user.UserExpandInfo"
-            android:parentActivityName=".MainActivity" />
-        <activity android:name=".ui.news.NewsExpandInfo"
-            android:parentActivityName=".MainActivity"/>
+            android:name="com.piu.ridp.user.UserExpandInfo"
+            android:parentActivityName="com.piu.ridp.MainActivity" />
+        <activity android:name="com.piu.ridp.ui.news.NewsExpandInfo"
+            android:parentActivityName="com.piu.ridp.MainActivity"/>
         <activity
-            android:name=".MainActivity"
+            android:name="com.piu.ridp.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

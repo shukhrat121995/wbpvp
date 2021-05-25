@@ -6,11 +6,11 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        applicationId "com.shukhrat.wbpvp"
+        applicationId "com.piu.ridp"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 102
-        versionName "1.02"
+        versionCode 103
+        versionName "1.03"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
