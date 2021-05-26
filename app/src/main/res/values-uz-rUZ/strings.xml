@@ -105,4 +105,8 @@
     <string name="news">Yangiliklar</string>
     <string name="open_data">Ma\'lumotlar</string>
     <string name="app_lang">uz</string>
+
+    <string name="gender">Jinsi</string>
+    <string name="male">Erkak</string>
+    <string name="female">Ayol</string>
 </resources>

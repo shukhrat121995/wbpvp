@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,6 +100,7 @@ public class SavedFeedbackFragment extends Fragment implements RecyclerViewAdapt
             titles.add(data.getString(1));
             descriptions.add(data.getString(2));
             images.add(data.getString(3));
+            Log.d("IMAGE", data.getString(3));
             locations.add(data.getString(5));
             dates.add(data.getString(6));
             status_states.add(Boolean.valueOf(data.getString(7)));

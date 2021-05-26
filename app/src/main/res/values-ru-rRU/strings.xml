@@ -108,4 +108,8 @@
     <string name="open_data">Данные</string>
     <string name="app_lang">ru</string>
 
+    <string name="gender">Пол</string>
+    <string name="male">Мужской</string>
+    <string name="female">Женский</string>
+
 </resources>

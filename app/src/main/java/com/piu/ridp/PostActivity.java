@@ -286,9 +286,9 @@ public class PostActivity extends BaseActivity {
 
         //* * * Spinner Gender start * * *
         arrayList_Gender = new ArrayList<>();
-        arrayList_Gender.add(0, "Gender");
-        arrayList_Gender.add("Male");
-        arrayList_Gender.add("Female");
+        arrayList_Gender.add(0, getString(R.string.gender));
+        arrayList_Gender.add(getString(R.string.male));
+        arrayList_Gender.add(getString(R.string.female));
 
         arrayAdapter_Gender = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, arrayList_Gender);
         spinner_gender.setAdapter(arrayAdapter_Gender);
@@ -360,10 +360,13 @@ public class PostActivity extends BaseActivity {
             try
             {
                 File sdCard = Environment.getExternalStorageDirectory();
-                File dir = new File(sdCard.getAbsolutePath() + "/wbpvp");
-                boolean folder = dir.mkdirs();
-                if(folder) {
-                    File file = new File(dir, "wbpvp_" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime()) + ".JPEG");
+                File dir = new File(sdCard.getAbsolutePath() + "/ridp");
+                if (!dir.exists()){
+                    dir.mkdirs();
+                }
+                //boolean folder = dir.mkdirs();
+                if(true) {
+                    File file = new File(dir, "ridp_" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime()) + ".JPEG");
                     save_path = file;
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
@@ -377,7 +380,8 @@ public class PostActivity extends BaseActivity {
                     }
                 } else
                 {
-                    Toast.makeText(PostActivity.this, "folder not created", Toast.LENGTH_LONG).show();
+                    Log.d("FOLDER", "folder not created");
+                    //Toast.makeText(PostActivity.this, "folder not created", Toast.LENGTH_LONG).show();
                 }
             }
             catch (Exception e)
